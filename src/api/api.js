@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // Create axios instance
-const api = axios.create({
+const API = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL, // backend base URL
 });
 
@@ -25,4 +25,4 @@ export const updateProfile = async (profileData) => {
   }
 };
 
-export default api;
+export default API;
