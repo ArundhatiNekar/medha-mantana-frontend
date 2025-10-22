@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import axios from "axios";
+import API from "../api/api"; // ✅ use our axios instance
 import "../styles/AnimatedAuth.css";
 
 // ✅ Import Google login components
@@ -35,7 +35,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", form);
+      const res = await API.post("/api/auth/login", form);
 
       // ✅ Save both token and user
       localStorage.setItem("token", res.data.token);
@@ -60,10 +60,10 @@ const Login = () => {
       console.log("✅ Google User:", decoded);
 
       // 🧠 Send Google user info to backend
-      const res = await axios.post("http://localhost:5000/api/auth/google-login", {
-        email: decoded.email,
-        name: decoded.name,
-      });
+      const res = await API.post("/api/auth/google-login", {
+  email: decoded.email,
+  name: decoded.name,
+});
 
       // ✅ Save token & user data locally
       localStorage.setItem("token", res.data.token);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../api/api"; // ✅ using our axios instance with Render backend URL
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,10 +22,10 @@ const AuthPage = () => {
     try {
       if (isLogin) {
         // 🔑 LOGIN
-        const res = await axios.post("http://localhost:5000/api/auth/login", {
-          email: form.email,
-          password: form.password,
-        });
+        const res = await API.post("/api/auth/login", {
+  email: form.email,
+  password: form.password,
+});
 
         // Save user to localStorage
         localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -35,7 +35,7 @@ const AuthPage = () => {
           res.data.user.role === "faculty" ? "/faculty" : "/quiz";
       } else {
         // 📝 REGISTER
-        await axios.post("http://localhost:5000/api/auth/register", form);
+        await API.post("/api/auth/register", form);
         alert("✅ Registered successfully, please login!");
         setIsLogin(true); // switch to login form
       }
