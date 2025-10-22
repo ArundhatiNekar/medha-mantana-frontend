@@ -46,9 +46,9 @@ export default function StudentQuiz() {
 
         // ✅ Shuffle questions
         const shuffled = [...quizData.questions].sort(() => 0.5 - Math.random());
+        quizData.questions = shuffled;
         setQuiz({ ...quizData, questions: shuffled });
         setQuestionOrder(shuffled.map((q) => q._id));
-
         if (!isDemo) {
           const saved = JSON.parse(localStorage.getItem(`quiz_${id}`));
           if (saved) {

@@ -46,12 +46,15 @@ export default function QuizInstructions() {
       }
     };
     fetchQuiz();
-  }, [id, navigate, location.state]);
+  }, [id, location.state?.session, navigate]);
 
   const handleStartQuiz = () => {
-    const isDemo = location.state?.demo;
-    navigate(`/quiz/${id}`, { state: { instructionsRead: true, demo: isDemo } });
-  };
+  const isDemo = location.state?.demo;
+  const sessionKey = Date.now(); // unique per attempt
+  navigate(`/quiz/${id}`, { 
+    state: { instructionsRead: true, demo: isDemo, sessionKey } 
+  });
+};
 
   if (loading) return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-600 to-cyan-600 flex items-center justify-center">
