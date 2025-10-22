@@ -28,7 +28,7 @@ export default function StudentQuiz() {
         if (isDemo && location.state?.quiz) {
           quizData = location.state.quiz;
         } else {
-          const res = await api.get(`/quizzes/${id.trim()}`); // ✅ fixed path
+          const res = await api.get(`/api/quizzes/${id.trim()}`); // ✅ fixed path
           quizData = res.data.quiz;
         }
 
@@ -36,6 +36,12 @@ export default function StudentQuiz() {
           alert("❌ Quiz not found");
           navigate("/student");
           return;
+        }
+
+        if (!quizData?.questions?.length) {
+  alert("⚠️ This quiz has no questions!");
+  navigate("/student");
+  return;
         }
 
         // ✅ Shuffle questions
@@ -202,7 +208,7 @@ export default function StudentQuiz() {
     }
 
     try {
-      const res = await api.post("/results", { // ✅ fixed path
+      const res = await api.post("/api/results", { // ✅ fixed path
         quizId: quiz._id,
         studentName:
           JSON.parse(localStorage.getItem("user"))?.username || "Anonymous",
