@@ -35,7 +35,7 @@ export default function QuizInstructions() {
       }
 
       try {
-        const res = await api.get(`/quizzes/${id.trim()}`);
+        const res = await api.get(`/api/quizzes/${id.trim()}`);
         setQuiz(res.data.quiz);
       } catch (err) {
         console.error("❌ Error fetching quiz:", err);
