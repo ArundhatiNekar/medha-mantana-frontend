@@ -1,13 +1,15 @@
-// src/api/api.js
+// ✅ src/api/api.js
 import axios from "axios";
 
 // Create axios instance
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // backend base URL
+const API = axios.create({
+  baseURL:
+    import.meta.env.VITE_API_BASE_URL ||
+    "https://medha-mantana-backend.onrender.com", // fallback for production
 });
 
-// Attach token automatically to every request
-api.interceptors.request.use((config) => {
+// Automatically attach JWT token to all requests
+API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -15,14 +17,14 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Profile update function
+// ✅ Example: Profile update API call
 export const updateProfile = async (profileData) => {
   try {
-    const response = await api.put("/auth/update-profile", profileData);
+    const response = await API.put("/api/auth/update-profile", profileData);
     return response.data;
   } catch (error) {
     throw error.response?.data || error;
   }
 };
 
-export default api;
+export default API;

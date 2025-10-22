@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../api/api"; // ✅ axios instance with backend baseURL
+import API from "../api/api"; // ✅ axios instance with backend baseURL
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,7 +22,7 @@ const AuthPage = () => {
     try {
       if (isLogin) {
         // 🔑 LOGIN
-        const res = await api.post("/api/auth/login", {
+        const res = await API.post("/api/auth/login", {
           email: form.email,
           password: form.password,
         });
@@ -34,7 +34,7 @@ const AuthPage = () => {
           res.data.user.role === "faculty" ? "/faculty" : "/quiz";
       } else {
         // 📝 REGISTER
-        await api.post("/api/auth/register", form);
+        await API.post("/api/auth/register", form);
         alert("✅ Registered successfully, please login!");
         setIsLogin(true);
       }
