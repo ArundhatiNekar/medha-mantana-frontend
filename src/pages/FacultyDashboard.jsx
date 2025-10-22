@@ -77,7 +77,7 @@ useEffect(() => {
   /* ---------------- FETCH DATA ---------------- */
   const fetchQuestions = async () => {
     try {
-      const res = await api.get("/questions");
+      const res = await api.get("/api/questions");
       setQuestions(res.data);
     } catch (err) {
       console.error("Error fetching questions:", err);
@@ -86,7 +86,7 @@ useEffect(() => {
 
   const fetchQuizzes = async () => {
     try {
-      const res = await api.get("/quizzes");
+      const res = await api.get("/api/quizzes");
       setAllQuizzes(res.data.quizzes || []);
     } catch (err) {
       console.error("Error fetching quizzes:", err);
@@ -96,8 +96,8 @@ useEffect(() => {
   const fetchResults = async (quizId = "") => {
     try {
       const res = quizId
-        ? await api.get(`/results/quiz/${quizId}`)
-        : await api.get("/results");
+        ? await api.get(`/api/results/quiz/${quizId}`)
+        : await api.get("/api/results");
       setResults(res.data.results || []);
     } catch (err) {
       console.error("Error fetching results:", err);
@@ -106,7 +106,7 @@ useEffect(() => {
 
   const fetchCSVFiles = async () => {
     try {
-      const res = await api.get("/questions/csv-files");
+      const res = await api.get("/api/questions/csv-files");
       setUploadedCSVs(res.data || []);
     } catch (err) {
       console.error("Error fetching CSV files:", err);
@@ -126,7 +126,7 @@ const handleCreateQuiz = async (payload) => {
     const faculty = JSON.parse(localStorage.getItem("user"));
 
     // ✅ Send request to backend
-    const res = await api.post("/quizzes", {
+    const res = await api.post("/api/quizzes", {
       ...payload,
       createdBy: faculty?.username || "faculty",
       certificateEnabled: quizCertificate,
@@ -221,10 +221,10 @@ const handleCreateQuiz = async (payload) => {
   }
   try {
     if (editingId) {
-      await api.put(`/questions/${editingId}`, form);
+      await api.put(`/api/questions/${editingId}`, form);
       setEditingId(null);
     } else {
-      await api.post("/questions", { ...form, source: "manual" });
+      await api.post("/api/questions", { ...form, source: "manual" });
     }
     setForm({
       question: "",
@@ -245,14 +245,14 @@ const handleCreateQuiz = async (payload) => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this question?")) return;
-    await api.delete(`/questions/${id}`);
+    await api.delete(`/api/questions/${id}`);
     fetchQuestions();
   };
 
   /* ---------------- DELETE FUNCTIONS ---------------- */
   const handleDeleteAll = async () => {
     if (!window.confirm("⚠️ Delete ALL questions?")) return;
-    await api.delete("/questions");
+    await api.delete("/api/questions");
     fetchQuestions();
     fetchCSVFiles();
   };
@@ -260,7 +260,7 @@ const handleCreateQuiz = async (payload) => {
   const handleDeleteCSVFile = async (fileId) => {
     if (!window.confirm("⚠️ Delete this CSV file & its questions?")) return;
     try {
-      const res = await api.delete(`/questions/delete-csv/${fileId}`);
+      const res = await api.delete(`/api/questions/delete-csv/${fileId}`);
       alert(res.data.message + ` (Deleted: ${res.data.deleted})`);
       fetchQuestions();
       fetchCSVFiles();
@@ -271,7 +271,7 @@ const handleCreateQuiz = async (payload) => {
 
   const downloadCSVFile = async (fileId) => {
     try {
-      const res = await api.get(`/questions/download-csv/${fileId}`, {
+      const res = await api.get(`/api/questions/download-csv/${fileId}`, {
         responseType: 'blob'
       });
       const url = window.URL.createObjectURL(new Blob([res.data]));
@@ -296,7 +296,7 @@ const handleCreateQuiz = async (payload) => {
     if (!file) return alert("Choose a file first");
     const fd = new FormData();
     fd.append("file", file);
-    const res = await api.post(`/questions/upload-${type}`, fd, {
+    const res = await api.post(`/api/questions/upload-${type}`, fd, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     alert(
