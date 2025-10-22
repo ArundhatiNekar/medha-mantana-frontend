@@ -23,7 +23,7 @@ export default function MyResultDetail() {
     // Otherwise, fetch from API
     const fetchResultDetail = async () => {
       try {
-        const res = await api.get(`/results/${id}`);
+        const res = await api.get(`/api/results/${id}`);
         console.log("✅ Result Data from API:", res.data);
 
         // handle both {result: {...}} and direct object {...}
