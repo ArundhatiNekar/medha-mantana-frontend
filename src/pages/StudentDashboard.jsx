@@ -67,7 +67,7 @@ export default function StudentDashboard() {
 
   const fetchQuizzes = async () => {
     try {
-      const res = await api.get("/quizzes");
+      const res = await api.get("/api/quizzes");
       if (res.data?.quizzes?.length > 0) {
         setQuizzes(res.data.quizzes);
       } else {
@@ -82,7 +82,7 @@ export default function StudentDashboard() {
   const fetchMyResults = async () => {
     try {
       if (!student?.username) return;
-      const res = await api.get(`/results/student/${student.username}`);
+      const res = await api.get(`/api/results/student/${student.username}`);
       setMyResults(res.data.results || []);
     } catch (err) {
       console.error("❌ Error fetching student results:", err.response || err);
@@ -108,7 +108,7 @@ export default function StudentDashboard() {
     }
 
     try {
-      const res = await api.get(`/quizzes/${quizId}`);
+      const res = await api.get(`/api/quizzes/${quizId}`);
 
       if (res.data?.quiz) {
         const alreadyAttempted = myResults.some(
@@ -135,7 +135,7 @@ export default function StudentDashboard() {
 
     try {
       const categoryParam = selectedCategory.toLowerCase();
-      const res = await api.get(`/quizzes/demo/${categoryParam}`);
+      const res = await api.get(`/api/quizzes/demo/${categoryParam}`);
       if (res.data?.quiz) {
         navigate(`/quiz/${res.data.quiz._id}`, {
           state: { demo: true, quiz: res.data.quiz },
