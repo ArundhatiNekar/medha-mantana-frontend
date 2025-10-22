@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import API from "../api/api"; // ✅ using our axios instance with Render backend URL
+import API from "../api/api"; // ✅ axios instance with backend baseURL
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -23,11 +23,10 @@ const AuthPage = () => {
       if (isLogin) {
         // 🔑 LOGIN
         const res = await API.post("/api/auth/login", {
-  email: form.email,
-  password: form.password,
-});
+          email: form.email,
+          password: form.password,
+        });
 
-        // Save user to localStorage
         localStorage.setItem("user", JSON.stringify(res.data.user));
 
         alert("✅ Login successful!");
@@ -37,7 +36,7 @@ const AuthPage = () => {
         // 📝 REGISTER
         await API.post("/api/auth/register", form);
         alert("✅ Registered successfully, please login!");
-        setIsLogin(true); // switch to login form
+        setIsLogin(true);
       }
     } catch (err) {
       alert("❌ " + (err.response?.data?.error || "Something went wrong"));
@@ -50,7 +49,7 @@ const AuthPage = () => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-200 to-purple-300">
       <div className="bg-white p-8 rounded-2xl shadow-2xl w-96 transform transition-all">
         <h2 className="text-2xl font-bold mb-6 text-center text-indigo-700">
-          {isLogin ? "🔑 Login to Apti_Quest" : "📝 Register for Apti_Quest"}
+          {isLogin ? "🔑 Login to Medha Mantana" : "📝 Register for Medha Mantana"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -115,9 +114,7 @@ const AuthPage = () => {
           className="text-center mt-4 text-blue-600 cursor-pointer hover:underline"
           onClick={() => setIsLogin(!isLogin)}
         >
-          {isLogin
-            ? "New here? Register"
-            : "Already have an account? Login"}
+          {isLogin ? "New here? Register" : "Already have an account? Login"}
         </p>
       </div>
     </div>
