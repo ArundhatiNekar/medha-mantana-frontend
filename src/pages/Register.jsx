@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import API from "../api/api"; // ✅ use your axios instance
+import api from "../api/api"; // ✅ use your axios instance
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { GoogleLogin } from "@react-oauth/google";
@@ -43,7 +43,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await API.post("/api/auth/register", form);
+      const res = await api.post("/api/auth/register", form);
 
       if (res.data && res.data.token) {
         localStorage.setItem("token", res.data.token);
@@ -86,7 +86,7 @@ export default function Register() {
   // ✅ Continue after selecting role (for Google user)
   const handleContinue = async () => {
     try {
-      const res = await API.post("/api/auth/google-register", form);
+      const res = await api.post("/api/auth/google-register", form);
       if (res.data && res.data.token) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
