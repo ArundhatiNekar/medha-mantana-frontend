@@ -19,7 +19,7 @@ export default function FacultyResults() {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const res = await api.get("/quizzes");
+        const res = await api.get("/api/quizzes");
         setAllQuizzes(res.data.quizzes || []);
       } catch (err) {
         console.error("❌ Error fetching quizzes:", err);
@@ -36,7 +36,7 @@ export default function FacultyResults() {
         setResults([]);
         return;
       }
-      const res = await api.get(`/results/quiz/${quizId}`);
+      const res = await api.get(`/api/results/quiz/${quizId}`);
       setResults(res.data.results || []);
     } catch (err) {
       console.error("❌ Error fetching results:", err);
