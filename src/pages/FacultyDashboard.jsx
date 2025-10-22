@@ -6,7 +6,7 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import api from "../api/api";
-import "../styles/facultyDashboard.css";
+import "../styles/FacultyDashboard.css";
 
 export default function FacultyDashboard() {
   const [questions, setQuestions] = useState([]);
