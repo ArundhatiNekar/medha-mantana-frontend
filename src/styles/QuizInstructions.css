@@ -1,0 +1,327 @@
+/* ===========================
+   QUIZ INSTRUCTIONS STYLES
+   Consistent with Student Dashboard theme
+   =========================== */
+
+body.quiz-instructions {
+  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+/* 🌈 Main Container */
+.quiz-instructions-wrapper {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🧊 Glass Card */
+.quiz-instructions-card {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease;
+}
+
+/* 🌟 Header Section */
+.quiz-instructions-header {
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.quiz-instructions-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #ffffff, #e0e7ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.quiz-instructions-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* 📄 Content Section */
+.quiz-instructions-content {
+  padding: 2rem;
+}
+
+/* 🏷️ Quiz Details Section */
+.quiz-details-section {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.quiz-details-section h3 {
+  color: #4f46e5;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.quiz-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item p:first-child {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.detail-item p:last-child {
+  font-size: 1rem;
+  color: #1e293b;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 📋 Guidelines Section */
+.guidelines-section h3 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.guidelines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.guideline-item h4 {
+  color: #4f46e5;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.guideline-item p {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ⚠️ Warning Section */
+.warning-section {
+  background: rgba(254, 240, 138, 0.8);
+  border-left: 4px solid #f59e0b;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+}
+
+.warning-section p {
+  color: #92400e;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.warning-section strong {
+  color: #78350f;
+}
+
+/* 🎯 Start Quiz Button */
+.start-quiz-section {
+  text-align: center;
+}
+
+.btn-start-quiz {
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+  min-width: 200px;
+}
+
+.btn-start-quiz:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.5);
+  background: linear-gradient(135deg, #4338ca, #0891b2);
+}
+
+/* ✅ Scroll styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4f46e5, #06b6d4);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #4338ca, #0891b2);
+}
+
+/* 🪶 Smooth fade animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🎯 Additional animations for quiz instructions */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+  }
+  50% {
+    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.6);
+  }
+}
+
+/* Apply animations to sections */
+.quiz-details-section {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.guidelines-section {
+  animation: slideInRight 0.8s ease-out 0.2s both;
+}
+
+.warning-section {
+  animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+.start-quiz-section {
+  animation: fadeInUp 0.6s ease-out 0.6s both;
+}
+
+.btn-start-quiz:hover {
+  animation: pulse 0.6s ease-in-out;
+}
+
+.btn-start-quiz {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Enhanced hover effects */
+.guideline-item:hover {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+
+.detail-item:hover {
+  background: rgba(79, 70, 229, 0.05);
+  transition: background 0.3s ease;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .quiz-instructions-wrapper {
+    padding: 1rem;
+  }
+
+  .quiz-instructions-header {
+    padding: 1.5rem;
+  }
+
+  .quiz-instructions-header h2 {
+    font-size: 2rem;
+  }
+
+  .quiz-instructions-content {
+    padding: 1.5rem;
+  }
+
+  .guidelines-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .quiz-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-start-quiz {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quiz-instructions-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .quiz-details-section,
+  .guidelines-section h3 {
+    font-size: 1.3rem;
+  }
+
+  .btn-start-quiz {
+    font-size: 1.1rem;
+  }
+}

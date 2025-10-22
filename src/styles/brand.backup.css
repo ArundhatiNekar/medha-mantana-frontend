@@ -1,0 +1,66 @@
+/* 🌸 Medha Manthana Brand Styling */
+
+:root {
+  --brand-color: #4f46e5;      /* Indigo base */
+  --brand-accent: #7c3aed;     /* Purple accent */
+  --brand-light: #ede9fe;      /* Light lavender background */
+  --brand-gradient: linear-gradient(to right, #a78bfa, #6366f1);
+  --brand-text: #1e1b4b;
+}
+
+/* ✅ Global background for pages */
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #e0f2fe 0%, #eef2ff 100%);
+  color: var(--brand-text);
+  margin: 0;
+  padding: 0;
+}
+
+/* ✅ Shared brand header */
+.brand-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.brand-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--brand-color);
+  letter-spacing: 0.5px;
+}
+
+.brand-header p {
+  font-style: italic;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* ✅ Gradient button helper */
+.brand-btn {
+  background: var(--brand-gradient);
+  color: #fff !important;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.brand-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+/* ✅ Card style helper */
+.brand-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+/* ✅ Input focus glow */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}

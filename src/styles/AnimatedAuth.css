@@ -1,0 +1,233 @@
+/* 🌍 Full viewport setup */
+html, body, #root {
+  background: linear-gradient(135deg, #e0f2fe 0%, #eef2ff 100%);
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+/* 🧠 Global base styles */
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #ffffff;
+  background-image: none !important;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: #1f2937; /* Neutral text for light pages */
+}
+
+/* ✅ Gradient background ONLY for Login/Register pages */
+body.auth-page {
+  background: linear-gradient(135deg, #e0f2fe 0%, #eef2ff 100%) !important;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  overflow-y: auto;
+}
+
+/* 🏠 Gradient for homepage hero section (optional reusable class) */
+.home-gradient {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 40%, #2563eb 100%);
+  color: #ffffff;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* 🎨 Color palette */
+:root {
+  --primary: #4f46e5; /* Indigo */
+  --accent: #06b6d4;  /* Cyan */
+  --highlight: #f59e0b; /* Amber */
+  --light-bg: #f9fafb;
+  --gradient-bg: linear-gradient(135deg, #e0f2fe 0%, #eef2ff 100%);
+}
+
+/* 🌈 Auth page wrapper */
+.auth-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 10% 10%, rgba(79,70,229,0.08), transparent 8%),
+              radial-gradient(circle at 90% 90%, rgba(6,182,212,0.06), transparent 8%),
+              var(--gradient-bg);
+  padding: 2rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* 🧊 Glassmorphic card */
+.auth-card {
+  z-index: 5;
+  width: 100%;
+  max-width: 430px;
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem 2rem;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  animation: fadeInUp 1s ease;
+}
+
+/* 🪄 Brand Header */
+.auth-brand {
+  text-align: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.auth-brand h1 {
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 0.3px;
+  animation: fadeIn 1s ease;
+}
+.auth-brand p {
+  margin: 0.4rem 0 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+  animation: fadeIn 1.4s ease;
+}
+
+/* 🧾 Form fields */
+.auth-form {
+  margin-top: 14px;
+  position: relative;
+}
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"],
+.auth-form select {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.06);
+  background: rgba(255, 255, 255, 0.9);
+  outline: none;
+  font-size: 0.95rem;
+  color: #111;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.auth-form input:focus,
+.auth-form select:focus {
+  box-shadow: 0 6px 18px rgba(79,70,229,0.1);
+  border-color: rgba(79,70,229,0.45);
+}
+
+/* 🚀 Buttons */
+.auth-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 4px 15px rgba(79,70,229,0.25);
+}
+.auth-btn:hover {
+  box-shadow: 0 6px 18px rgba(79,70,229,0.35);
+  transform: translateY(-2px);
+}
+
+/* 🔗 Links */
+.auth-link {
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s;
+  position: relative;
+}
+.auth-link:hover {
+  color: var(--accent);
+}
+
+/* ✨ Animation keyframes */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 🧭 Navbar (for Home Page) */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: transparent;
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  color: white;
+  z-index: 100;
+}
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.navbar a:hover {
+  color: #facc15; /* Yellow hover */
+}
+.navbar button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.navbar .btn-primary {
+  background: #facc15;
+  color: #1f2937;
+  border: none;
+}
+.navbar .btn-primary:hover {
+  background: #fde047;
+}
+.navbar .btn-outline {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+.navbar .btn-outline:hover {
+  background: white;
+  color: #1f2937;
+}
+
+/* 📱 Responsive Tweaks */
+@media (max-width: 1024px) {
+  .auth-card { max-width: 400px; padding: 2rem; }
+}
+@media (max-width: 768px) {
+  .auth-wrapper { padding: 1.5rem; }
+  .auth-card { max-width: 90%; border-radius: 14px; }
+  .auth-brand h1 { font-size: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .auth-wrapper { padding: 1rem; min-height: 100vh; }
+  .auth-card { padding: 1.2rem; border-radius: 12px; }
+  .auth-brand h1 { font-size: 1.3rem; }
+}

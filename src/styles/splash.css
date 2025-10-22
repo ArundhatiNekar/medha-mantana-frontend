@@ -1,0 +1,87 @@
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #e0f2fe 0%, #eef2ff 100%);
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  overflow: hidden;
+}
+
+.brand-logo h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 1.5s ease;
+}
+
+.brand-logo span {
+  color: #06b6d4;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  margin-top: 0.6rem;
+  color: #334155;
+  animation: fadeIn 2s ease;
+}
+
+.subtext {
+  font-style: italic;
+  font-size: 1rem;
+  color: #64748b;
+  margin-top: 0.4rem;
+  animation: fadeIn 2.4s ease;
+}
+
+.zones {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  margin-top: 3rem;
+  animation: fadeInUp 2.6s ease;
+}
+
+.zone {
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.15);
+}
+
+.zone h2 {
+  font-size: 1.6rem;
+  font-family: "Playfair Display", serif;
+  color: #4f46e5;
+  margin-bottom: 0.3rem;
+}
+
+.zone p {
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.faculty {
+  border-top: 3px solid #4f46e5;
+}
+
+.student {
+  border-top: 3px solid #06b6d4;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
