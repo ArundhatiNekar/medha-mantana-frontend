@@ -18,10 +18,10 @@ export default function StudentResultDetail() {
   const fetchResults = async () => {
     try {
       if (isFacultyMode) {
-        const res = await api.get(`/results/student/${studentName}`);
+        const res = await api.get(`/api/results/student/${studentName}`);
         setResults(res.data.results || []);
       } else if (isStudentMode) {
-        const res = await api.get(`/results/${id}`);
+        const res = await api.get(`/api/results/${id}`);
         setSingleResult(res.data.result || null);
       }
     } catch (err) {
