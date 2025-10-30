@@ -19,6 +19,9 @@ import StudentResultDetail from "./pages/StudentResultDetail";
 import MyResultDetail from "./pages/MyResultDetail";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
+import ManageUsers from "./pages/ManageUsers";
+import ManageQuizzes from "./pages/ManageQuizzes";
+import ManageResults from "./pages/ManageResults";
 
 // ✅ Protected Route Component
 const ProtectedRoute = ({ children, role }) => {
@@ -55,6 +58,10 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/help" element={<Help />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin/users" element={<ManageUsers />} />
+        <Route path="/admin/quizzes" element={<ManageQuizzes />} />
+        <Route path="/admin/results" element={<ManageResults />} />
+
 
         {/* 👥 Role-based Logins */}
         <Route path="/login/student" element={<StudentLogin />} />
