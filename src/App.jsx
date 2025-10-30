@@ -2,13 +2,20 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import StudentLogin from "./pages/StudentLogin";
+import FacultyLogin from "./pages/FacultyLogin";
+import AdminLogin from "./pages/AdminLogin";
+import About from "./pages/About";
+import Features from "./pages/Features";
+import Contact from "./pages/Contact";
+import Help from "./pages/Help";
 import FacultyDashboard from "./pages/FacultyDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import StudentQuiz from "./pages/StudentQuiz";
 import QuizInstructions from "./pages/QuizInstructions";
 import FacultyResults from "./pages/FacultyResults";
-import StudentResultDetail from "./pages/StudentResultDetail"; // ✅ reused for both faculty + student
+import StudentResultDetail from "./pages/StudentResultDetail";
 import MyResultDetail from "./pages/MyResultDetail";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
@@ -22,7 +29,16 @@ const ProtectedRoute = ({ children, role }) => {
   }
 
   if (role && user.role !== role) {
-    return <Navigate to="/login" replace />;
+    // Redirect to appropriate dashboard based on user role
+    if (user.role === "faculty") {
+      return <Navigate to="/faculty" replace />;
+    } else if (user.role === "student") {
+      return <Navigate to="/student" replace />;
+    } else if (user.role === "admin") {
+      return <Navigate to="/admin/dashboard" replace />;
+    } else {
+      return <Navigate to="/" replace />;
+    }
   }
 
   return children;
@@ -34,10 +50,30 @@ function App() {
       <Routes>
         {/* 🌐 Public Routes */}
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/help" element={<Help />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
 
-        {/* 🧑‍🏫 Faculty Dashboard (Protected) */}
+        {/* 👥 Role-based Logins */}
+        <Route path="/login/student" element={<StudentLogin />} />
+        <Route path="/login/faculty" element={<FacultyLogin />} />
+
+        {/* 🆕 Admin Login */}
+        <Route path="/login/admin" element={<AdminLogin />} />
+
+        {/* 🆕 Admin Dashboard */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* 🧑‍🏫 Faculty Dashboard */}
         <Route
           path="/faculty"
           element={
@@ -47,7 +83,7 @@ function App() {
           }
         />
 
-        {/* ✅ Faculty Results Page (Protected) */}
+        {/* ✅ Faculty Results */}
         <Route
           path="/faculty/results"
           element={
@@ -57,7 +93,7 @@ function App() {
           }
         />
 
-        {/* ✅ Faculty: View Student Result Detail (Protected) */}
+        {/* ✅ Faculty: View Student Result Detail */}
         <Route
           path="/faculty/results/:studentName"
           element={
@@ -67,7 +103,7 @@ function App() {
           }
         />
 
-        {/* 🎓 Student Dashboard (Protected) */}
+        {/* 🎓 Student Dashboard */}
         <Route
           path="/student"
           element={
@@ -77,7 +113,7 @@ function App() {
           }
         />
 
-        {/* 📋 Quiz Instructions (Protected) */}
+        {/* 📋 Quiz Instructions */}
         <Route
           path="/quiz/:id/instructions"
           element={
@@ -87,7 +123,7 @@ function App() {
           }
         />
 
-        {/* 🎯 Student Quiz (Dynamic quizId, Protected) */}
+        {/* 🎯 Student Quiz */}
         <Route
           path="/quiz/:id"
           element={
@@ -97,7 +133,7 @@ function App() {
           }
         />
 
-        {/* ✅ Student: Detailed Quiz Attempt Page (uses StudentResultDetail) */}
+        {/* 🧾 Student: View Quiz Result */}
         <Route
           path="/student/result/:id"
           element={
@@ -107,7 +143,7 @@ function App() {
           }
         />
 
-        {/* ✅ Student: My Result Detail (New route) */}
+        {/* 📜 Student: My Result Detail */}
         <Route
           path="/student/myresult/:id"
           element={
@@ -117,7 +153,7 @@ function App() {
           }
         />
 
-        {/* 👤 Profile Page (Protected for both roles) */}
+        {/* 👤 Profile Page */}
         <Route
           path="/profile"
           element={

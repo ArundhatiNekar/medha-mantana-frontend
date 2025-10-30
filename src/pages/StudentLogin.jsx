@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import API from "../api/api"; // ✅ use our axios instance
 import "../styles/AnimatedAuth.css";
@@ -9,12 +8,10 @@ import "../styles/AnimatedAuth.css";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"; // ✅ Correct import for Vite
 
-const Login = () => {
+const StudentLogin = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const intendedRole = searchParams.get("role");
 
   /* ✅ Add gradient background for login page */
   useEffect(() => {
@@ -146,7 +143,7 @@ const Login = () => {
           className="text-2xl font-bold text-center mb-6 text-indigo-700"
           variants={itemVariants}
         >
-          🔑 Login {intendedRole && `as ${intendedRole.charAt(0).toUpperCase() + intendedRole.slice(1)}`}
+          🔑 Login as Student
         </motion.h2>
 
         {/* Login Form */}
@@ -221,4 +218,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default StudentLogin;

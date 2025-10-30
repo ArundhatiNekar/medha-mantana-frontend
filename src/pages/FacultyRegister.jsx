@@ -1,18 +1,17 @@
-
 import React, { useState, useEffect } from "react";
 import API from "../api/api"; // ✅ use your axios instance
-import { useNavigate, Link, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"; // ✅ Correct modern import
 import "../styles/AnimatedAuth.css";
 
-export default function Register() {
+export default function FacultyRegister() {
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
-    role: "",
+    role: "faculty",
     facultyCode: "",
   });
 
@@ -20,8 +19,6 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const intendedRole = searchParams.get("role");
 
   /* ✅ Apply gradient background for Register page */
   useEffect(() => {
@@ -32,13 +29,6 @@ export default function Register() {
       document.body.classList.remove("auth-page");
     };
   }, []);
-
-  // Pre-fill role if coming from home page
-  useEffect(() => {
-    if (intendedRole) {
-      setForm(prev => ({ ...prev, role: intendedRole }));
-    }
-  }, [intendedRole]);
 
   // 🔹 Handle input field updates
   const handleChange = (e) => {
@@ -58,14 +48,7 @@ export default function Register() {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         alert("✅ Registration successful!");
-        // Redirect based on role
-        if (res.data.user.role === "admin") {
-          window.location.href = "/admin";
-        } else if (res.data.user.role === "faculty") {
-          window.location.href = "/faculty";
-        } else {
-          window.location.href = "/student";
-        }
+        navigate("/faculty");
       }
     } catch (err) {
       setError(err.response?.data?.error || "❌ Registration failed. Please try again.");
@@ -107,14 +90,7 @@ export default function Register() {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         alert("✅ Account created via Google!");
-        // Redirect based on role
-        if (res.data.user.role === "admin") {
-          window.location.href = "/admin";
-        } else if (res.data.user.role === "faculty") {
-          window.location.href = "/faculty";
-        } else {
-          window.location.href = "/student";
-        }
+        navigate("/faculty");
       }
     } catch (err) {
       console.error(err);
@@ -172,7 +148,7 @@ export default function Register() {
               className="text-2xl font-bold text-center mb-4 text-indigo-700"
               variants={itemVariants}
             >
-              📝 Create an Account
+              📝 Register as Faculty
             </motion.h2>
 
             {error && (
@@ -225,29 +201,10 @@ export default function Register() {
                 whileFocus={{ scale: 1.02 }}
               />
 
-              {/* ✅ Added placeholder option for role */}
-              <motion.select
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-                className="border p-2 w-full mb-3 rounded-lg focus:ring focus:ring-indigo-300"
-                required
-                variants={itemVariants}
-                whileFocus={{ scale: 1.02 }}
-              >
-                <option value="" disabled>
-                  Select your role
-                </option>
-                <option value="student">👨‍🎓 Student</option>
-                <option value="faculty">👩‍🏫 Faculty</option>
-                <option value="admin">👑 Admin</option>
-              </motion.select>
-
-            {(form.role === "faculty" || form.role === "admin") && (
               <motion.input
                 type="text"
                 name="facultyCode"
-                placeholder={form.role === "admin" ? "Enter Admin Code" : "Enter Faculty Code"}
+                placeholder="Enter Faculty Code"
                 className="border p-2 w-full mb-3 rounded-lg focus:ring focus:ring-indigo-300"
                 value={form.facultyCode}
                 onChange={handleChange}
@@ -255,7 +212,6 @@ export default function Register() {
                 variants={itemVariants}
                 whileFocus={{ scale: 1.02 }}
               />
-            )}
 
               <motion.button
                 type="submit"
@@ -294,7 +250,7 @@ export default function Register() {
                 className="auth-link"
                 whileHover={{ scale: 1.05 }}
               >
-                <Link to="/login">Login here</Link>
+                <a href="/login/faculty">Login here</a>
               </motion.span>
             </motion.p>
           </>
@@ -311,39 +267,20 @@ export default function Register() {
               className="text-center text-gray-600 mb-3"
               variants={itemVariants}
             >
-              Please select your role to continue:
+              Please enter your faculty code to continue:
             </motion.p>
 
-            <motion.select
-              name="role"
-              value={form.role}
-              onChange={handleChange}
+            <motion.input
+              type="text"
+              name="facultyCode"
+              placeholder="Enter Faculty Code"
               className="border p-2 w-full mb-3 rounded-lg focus:ring focus:ring-indigo-300"
+              value={form.facultyCode}
+              onChange={handleChange}
               required
               variants={itemVariants}
               whileFocus={{ scale: 1.02 }}
-            >
-              <option value="" disabled>
-                Select your role
-              </option>
-              <option value="student">👨‍🎓 Student</option>
-              <option value="faculty">👩‍🏫 Faculty</option>
-              <option value="admin">👑 Admin</option>
-            </motion.select>
-
-            {(form.role === "faculty" || form.role === "admin") && (
-              <motion.input
-                type="text"
-                name="facultyCode"
-                placeholder={form.role === "admin" ? "Enter Admin Code" : "Enter Faculty Code"}
-                className="border p-2 w-full mb-3 rounded-lg focus:ring focus:ring-indigo-300"
-                value={form.facultyCode}
-                onChange={handleChange}
-                required
-                variants={itemVariants}
-                whileFocus={{ scale: 1.02 }}
-              />
-            )}
+            />
 
             <motion.button
               onClick={handleContinue}
