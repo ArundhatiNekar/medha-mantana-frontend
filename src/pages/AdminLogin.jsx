@@ -19,7 +19,7 @@ export default function AdminLogin() {
     e.preventDefault();
     try {
       // ✅ Correct backend route
-      const res = await api.post("/auth/admin-login", formData);
+      const res = await api.post("/api/auth/admin-login", formData);
 
       // ✅ Save token & user
       localStorage.setItem("token", res.data.token);
