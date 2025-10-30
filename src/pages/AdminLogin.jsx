@@ -27,7 +27,10 @@ export default function AdminLogin() {
 
       // ✅ Redirect only if admin
       if (res.data.user.role === "admin") {
+        console.log("✅ Login response:", res.data);
+        alert("Login Successful!");
         navigate("/admin/dashboard");
+
       } else {
         setError("You are not authorized as admin");
       }

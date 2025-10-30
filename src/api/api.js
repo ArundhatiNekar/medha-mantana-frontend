@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Create axios instance
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // ✅ Backend URL from .env
+  baseURL: "https://medha-mantana-backend.onrender.com", // ✅ Backend URL from .env
 });
 
 // Automatically attach JWT token to all requests
