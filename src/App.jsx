@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 import Login from "./pages/Login";
 import StudentLogin from "./pages/StudentLogin";
@@ -32,7 +34,6 @@ const ProtectedRoute = ({ children, role }) => {
   }
 
   if (role && user.role !== role) {
-    // Redirect to appropriate dashboard based on user role
     if (user.role === "faculty") {
       return <Navigate to="/faculty" replace />;
     } else if (user.role === "student") {
@@ -47,6 +48,7 @@ const ProtectedRoute = ({ children, role }) => {
   return children;
 };
 
+// ✅ Main App Component
 function App() {
   return (
     <Router>
@@ -58,16 +60,15 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/help" element={<Help />} />
         <Route path="/login" element={<Login />} />
+
+        {/* 🧑‍💼 Admin Routes */}
         <Route path="/admin/users" element={<ManageUsers />} />
         <Route path="/admin/quizzes" element={<ManageQuizzes />} />
         <Route path="/admin/results" element={<ManageResults />} />
 
-
         {/* 👥 Role-based Logins */}
         <Route path="/login/student" element={<StudentLogin />} />
         <Route path="/login/faculty" element={<FacultyLogin />} />
-
-        {/* 🆕 Admin Login */}
         <Route path="/login/admin" element={<AdminLogin />} />
 
         {/* 🆕 Admin Dashboard */}
@@ -173,6 +174,9 @@ function App() {
         {/* 🔁 Catch-all redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {/* ✅ Toast Container - added properly */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </Router>
   );
 }
