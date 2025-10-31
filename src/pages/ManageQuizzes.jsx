@@ -36,7 +36,7 @@ export default function ManageQuizzes() {
     e.preventDefault();
     try {
       const user = JSON.parse(localStorage.getItem("user"));
-      const payload = { ...newQuiz, creator: user?.name || "Admin" };
+      const payload = { ...newQuiz, createdBy: user?.name || "Admin" };
       await api.post("/api/admin/quizzes", payload);
       toast.success("Quiz added successfully!");
       setNewQuiz({ title: "", description: "" });
@@ -142,7 +142,7 @@ export default function ManageQuizzes() {
               <tr key={quiz._id} className="border-t">
                 <td className="p-3">{quiz.title}</td>
                 <td className="p-3">{quiz.description}</td>
-                <td className="p-3">{quiz.creator || "Unknown"}</td>
+                <td className="p-3">{quiz.createdBy || "Unknown"}</td>
                 <td className="p-3 text-center">
                   <button
                     className="bg-yellow-400 px-3 py-1 rounded mr-2 hover:bg-yellow-500"

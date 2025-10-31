@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import Login from "./pages/Login";
 import StudentLogin from "./pages/StudentLogin";
 import FacultyLogin from "./pages/FacultyLogin";
+import FacultyRegister from "./pages/FacultyRegister"; 
 import AdminLogin from "./pages/AdminLogin";
 import About from "./pages/About";
 import Features from "./pages/Features";
@@ -69,6 +70,7 @@ function App() {
         {/* 👥 Role-based Logins */}
         <Route path="/login/student" element={<StudentLogin />} />
         <Route path="/login/faculty" element={<FacultyLogin />} />
+        <Route path="/faculty-register" element={<FacultyRegister />} />
         <Route path="/login/admin" element={<AdminLogin />} />
 
         {/* 🆕 Admin Dashboard */}
