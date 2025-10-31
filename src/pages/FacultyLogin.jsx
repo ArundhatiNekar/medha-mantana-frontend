@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import API from "../api/api";
 import "../styles/AnimatedAuth.css";
@@ -11,7 +10,6 @@ import { jwtDecode } from "jwt-decode";
 const FacultyLogin = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.classList.add("auth-page");
@@ -185,21 +183,17 @@ const FacultyLogin = () => {
           />
         </motion.div>
 
-        {/* 🔹 Register Link (now identical to StudentLogin) */}
-        <motion.div
-          className="text-center mt-6"
-          variants={itemVariants}
-        >
+        {/* 🔹 Register Link using href */}
+        <motion.div className="text-center mt-6" variants={itemVariants}>
           <p className="text-gray-600 text-sm">
             New here?{" "}
-            <motion.span
-              className="text-indigo-600 font-semibold cursor-pointer hover:underline"
+            <a
+              href="/faculty-register"
+              className="auth-link"
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/faculty-register")}
             >
               Register
-            </motion.span>
+            </a>
           </p>
         </motion.div>
       </motion.div>
