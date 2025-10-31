@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 export default function ManageQuizzes() {
   const [quizzes, setQuizzes] = useState([]);
-
   const token = localStorage.getItem("token");
 
   /* -------------------------------------------------------------------------- */
@@ -65,7 +64,6 @@ export default function ManageQuizzes() {
           <thead className="bg-blue-100 text-left">
             <tr>
               <th className="p-3">Title</th>
-              <th className="p-3">Description</th>
               <th className="p-3">Creator</th>
               <th className="p-3 text-center">Actions</th>
             </tr>
@@ -75,7 +73,6 @@ export default function ManageQuizzes() {
               quizzes.map((quiz) => (
                 <tr key={quiz._id} className="border-t">
                   <td className="p-3">{quiz.title}</td>
-                  <td className="p-3">{quiz.description}</td>
                   <td className="p-3">{quiz.createdBy || "Unknown"}</td>
                   <td className="p-3 text-center">
                     <button
@@ -89,7 +86,7 @@ export default function ManageQuizzes() {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="p-4 text-center text-gray-500">
+                <td colSpan="3" className="p-4 text-center text-gray-500">
                   No quizzes available
                 </td>
               </tr>
