@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import API from "../api/api"; // ✅ use our axios instance
+import API from "../api/api"; // ✅ use axios instance
 import "../styles/AnimatedAuth.css";
 
-// ✅ Import Google login components
+// ✅ Google Login
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode"; // ✅ Correct import for Vite
+import { jwtDecode } from "jwt-decode";
 
 const StudentLogin = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  /* ✅ Add gradient background for login page */
+  /* ✅ Gradient background for Login page */
   useEffect(() => {
     document.body.classList.add("auth-page");
-
-    // 🧹 Clean up when leaving this page
     return () => {
       document.body.classList.remove("auth-page");
     };
@@ -28,7 +26,7 @@ const StudentLogin = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🔹 Handle manual login
+  // 🔹 Manual login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -36,20 +34,14 @@ const StudentLogin = () => {
     try {
       const res = await API.post("/api/auth/login", form);
 
-      // ✅ Save both token and user
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-
       alert("✅ Login successful!");
 
       // Redirect based on role
-      if (res.data.user.role === "admin") {
-        window.location.href = "/admin";
-      } else if (res.data.user.role === "faculty") {
-        window.location.href = "/faculty";
-      } else {
-        window.location.href = "/student";
-      }
+      if (res.data.user.role === "admin") navigate("/admin");
+      else if (res.data.user.role === "faculty") navigate("/faculty");
+      else navigate("/student");
     } catch (err) {
       alert("❌ " + (err.response?.data?.error || "Login failed"));
     } finally {
@@ -57,53 +49,41 @@ const StudentLogin = () => {
     }
   };
 
-  // ✅ Handle Google login success
+  // ✅ Google login success
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const decoded = jwtDecode(credentialResponse.credential);
       console.log("✅ Google User:", decoded);
 
-      // 🧠 Send Google user info to backend
       const res = await API.post("/api/auth/google-login", {
-  email: decoded.email,
-  name: decoded.name,
-});
+        email: decoded.email,
+        name: decoded.name,
+      });
 
-      // ✅ Save token & user data locally
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-
       alert(`✅ Welcome back, ${res.data.user.username}!`);
 
-      // Redirect based on role
-      if (res.data.user.role === "admin") {
-        window.location.href = "/admin";
-      } else if (res.data.user.role === "faculty") {
-        window.location.href = "/faculty";
-      } else {
-        window.location.href = "/student";
-      }
+      if (res.data.user.role === "admin") navigate("/admin");
+      else if (res.data.user.role === "faculty") navigate("/faculty");
+      else navigate("/student");
     } catch (error) {
       console.error("Google login error:", error);
       alert("❌ Google login failed. Please try again.");
     }
   };
 
-  // ❌ Handle Google login error
   const handleGoogleError = () => {
     alert("❌ Google Sign-In failed. Please try again.");
   };
 
+  // ✅ Animations
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-        staggerChildren: 0.1,
-      },
+      transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.1 },
     },
   };
 
@@ -112,10 +92,7 @@ const StudentLogin = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
+      transition: { duration: 0.5, ease: "easeOut" },
     },
   };
 
@@ -126,17 +103,13 @@ const StudentLogin = () => {
       initial="hidden"
       animate="visible"
     >
-
-      {/* 🪄 Login Card */}
-      <motion.div
-        className="auth-card glass-effect"
-        id="auth-card"
-        variants={itemVariants}
-      >
-        {/* 🟣 Header */}
+      <motion.div className="auth-card glass-effect" variants={itemVariants}>
+        {/* 🟣 Brand Section */}
         <motion.div className="auth-brand" variants={itemVariants}>
           <motion.h1 variants={itemVariants}>Medha Mantana</motion.h1>
-          <motion.p variants={itemVariants}>“Sharpen Your Medha, Master Every Mantana”</motion.p>
+          <motion.p variants={itemVariants}>
+            “Sharpen Your Medha, Master Every Mantana”
+          </motion.p>
         </motion.div>
 
         <motion.h2
@@ -146,7 +119,7 @@ const StudentLogin = () => {
           🔑 Login as Student
         </motion.h2>
 
-        {/* Login Form */}
+        {/* 🧾 Login Form */}
         <motion.form
           onSubmit={handleSubmit}
           className="auth-form space-y-4"
@@ -197,7 +170,7 @@ const StudentLogin = () => {
           ────── or ──────
         </motion.div>
 
-        {/* 🌐 Google Login Button */}
+        {/* 🌐 Google Login */}
         <motion.div
           className="flex justify-center mb-4"
           variants={itemVariants}
@@ -212,7 +185,19 @@ const StudentLogin = () => {
           />
         </motion.div>
 
-
+        {/* 🆕 Register Link */}
+        <motion.p
+          className="text-sm text-center mt-4"
+          variants={itemVariants}
+        >
+          New here?{" "}
+          <motion.span
+            className="auth-link"
+            whileHover={{ scale: 1.05 }}
+          >
+            <a href="/register/student">Register here</a>
+          </motion.span>
+        </motion.p>
       </motion.div>
     </motion.div>
   );

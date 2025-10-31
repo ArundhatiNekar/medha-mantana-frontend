@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import API from "../api/api"; // ✅ use our axios instance
+import API from "../api/api";
 import "../styles/AnimatedAuth.css";
 
-// ✅ Import Google login components
+// ✅ Google Login imports
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode"; // ✅ Correct import for Vite
+import { jwtDecode } from "jwt-decode";
 
 const FacultyLogin = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  /* ✅ Add gradient background for login page */
   useEffect(() => {
     document.body.classList.add("auth-page");
-
-    // 🧹 Clean up when leaving this page
     return () => {
       document.body.classList.remove("auth-page");
     };
@@ -28,21 +25,16 @@ const FacultyLogin = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🔹 Handle manual login
+  // 🔹 Manual login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const res = await API.post("/api/auth/login", form);
-
-      // ✅ Save both token and user
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       alert("✅ Login successful!");
-
-      // Redirect based on role
       if (res.data.user.role === "admin") {
         window.location.href = "/admin";
       } else if (res.data.user.role === "faculty") {
@@ -57,25 +49,20 @@ const FacultyLogin = () => {
     }
   };
 
-  // ✅ Handle Google login success
+  // ✅ Google login success handler
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const decoded = jwtDecode(credentialResponse.credential);
-      console.log("✅ Google User:", decoded);
-
-      // 🧠 Send Google user info to backend
       const res = await API.post("/api/auth/google-login", {
-  email: decoded.email,
-  name: decoded.name,
-});
+        email: decoded.email,
+        name: decoded.name,
+      });
 
-      // ✅ Save token & user data locally
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       alert(`✅ Welcome back, ${res.data.user.username}!`);
 
-      // Redirect based on role
       if (res.data.user.role === "admin") {
         window.location.href = "/admin";
       } else if (res.data.user.role === "faculty") {
@@ -89,34 +76,23 @@ const FacultyLogin = () => {
     }
   };
 
-  // ❌ Handle Google login error
   const handleGoogleError = () => {
     alert("❌ Google Sign-In failed. Please try again.");
   };
 
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-        staggerChildren: 0.1,
-      },
+      transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.1 },
     },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
   };
 
   return (
@@ -126,17 +102,14 @@ const FacultyLogin = () => {
       initial="hidden"
       animate="visible"
     >
-
       {/* 🪄 Login Card */}
-      <motion.div
-        className="auth-card glass-effect"
-        id="auth-card"
-        variants={itemVariants}
-      >
+      <motion.div className="auth-card glass-effect" variants={itemVariants}>
         {/* 🟣 Header */}
         <motion.div className="auth-brand" variants={itemVariants}>
           <motion.h1 variants={itemVariants}>Medha Mantana</motion.h1>
-          <motion.p variants={itemVariants}>“Sharpen Your Medha, Master Every Mantana”</motion.p>
+          <motion.p variants={itemVariants}>
+            “Sharpen Your Medha, Master Every Mantana”
+          </motion.p>
         </motion.div>
 
         <motion.h2
@@ -212,7 +185,23 @@ const FacultyLogin = () => {
           />
         </motion.div>
 
-
+        {/* 🔹 Register Link (now identical to StudentLogin) */}
+        <motion.div
+          className="text-center mt-6"
+          variants={itemVariants}
+        >
+          <p className="text-gray-600 text-sm">
+            New here?{" "}
+            <motion.span
+              className="text-indigo-600 font-semibold cursor-pointer hover:underline"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/faculty-register")}
+            >
+              Register
+            </motion.span>
+          </p>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
