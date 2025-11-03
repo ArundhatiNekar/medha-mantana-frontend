@@ -67,7 +67,7 @@ export default function FacultyResults() {
         Student: r.studentName,
         Score: r.score,
         Total: r.total,
-        Quiz: r.quizId?.title || "N/A",
+        Quiz: r.quiz?.title || "N/A",
         Date: new Date(r.date).toLocaleString(),
       }))
     );
@@ -192,8 +192,8 @@ export default function FacultyResults() {
                         </button>
                       </td>
                       <td>{r.score}</td>
-                      <td>{r.total}</td>
-                      <td>{new Date(r.date).toLocaleString()}</td>
+                      <td>{r.totalQuestions}</td>
+                      <td>{new Date(r.attemptedAt).toLocaleString()}</td>
                     </tr>
                   ))}
               </tbody>

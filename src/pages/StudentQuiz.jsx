@@ -16,6 +16,7 @@ export default function StudentQuiz() {
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [justSubmittedResult, setJustSubmittedResult] = useState(null);
   const [questionOrder, setQuestionOrder] = useState([]);
 
@@ -44,16 +45,28 @@ export default function StudentQuiz() {
   return;
         }
 
-        // ✅ Shuffle questions
-        const shuffled = [...quizData.questions].sort(() => 0.5 - Math.random());
-        quizData.questions = shuffled;
-        setQuiz({ ...quizData, questions: shuffled });
+       // ✅ Shuffle and limit questions
+let shuffled = [...quizData.questions].sort(() => 0.5 - Math.random());
+
+// If faculty specified number of questions, limit to that
+if (quizData.numQuestions && quizData.numQuestions > 0) {
+  shuffled = shuffled.slice(0, quizData.numQuestions);
+}
+
+quizData.questions = shuffled;
+setQuiz({ ...quizData, questions: shuffled });
+
         setQuestionOrder(shuffled.map((q) => q._id));
         if (!isDemo) {
-          const saved = JSON.parse(localStorage.getItem(`quiz_${id}`));
-          if (saved) {
-            setAnswers(saved.answers || {});
-            setTimeLeft(saved.timeLeft || quizData.duration);
+          const user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+            const saved = JSON.parse(localStorage.getItem(`quiz_${id}`));
+            if (saved) {
+              setAnswers(saved.answers || {});
+              setTimeLeft(saved.timeLeft || quizData.duration);
+            } else {
+              setTimeLeft(quizData.duration);
+            }
           } else {
             setTimeLeft(quizData.duration);
           }
@@ -139,10 +152,13 @@ export default function StudentQuiz() {
         const newTime = prev - 1;
 
         if (!isDemo) {
-          localStorage.setItem(
-            `quiz_${id}`,
-            JSON.stringify({ answers, timeLeft: newTime })
-          );
+          const user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+            localStorage.setItem(
+              `quiz_${id}`,
+              JSON.stringify({ answers, timeLeft: newTime })
+            );
+          }
         }
 
         return newTime;
@@ -166,67 +182,90 @@ export default function StudentQuiz() {
     setAnswers(updated);
 
     if (!isDemo) {
-      localStorage.setItem(
-        `quiz_${id}`,
-        JSON.stringify({ answers: updated, timeLeft })
-      );
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        localStorage.setItem(
+          `quiz_${id}`,
+          JSON.stringify({ answers: updated, timeLeft })
+        );
+      }
     }
   };
 
   // ---------------- SUBMIT ----------------
-  const handleSubmit = async () => {
-    if (!quiz || submitted) return;
+  // ---------------- SUBMIT ----------------
+const handleSubmit = async () => {
+  if (!quiz || submitted || submitting) return;
 
-    const total = quiz.questions.length;
-    let score = 0;
-    quiz.questions.forEach((q) => {
-      if (answers[q._id] === q.answer) score++;
+  setSubmitting(true);
+
+  const total = quiz.questions.length;
+  let score = 0;
+  quiz.questions.forEach((q) => {
+    if (answers[q._id] === q.answer) score++;
+  });
+
+  const allowedTime = quiz.duration;
+  const timeTaken = allowedTime - timeLeft;
+
+  if (isDemo) {
+    const snapshotAnswers = quiz.questions.map((q) => ({
+      questionId: q._id,
+      question: q.question,
+      options: q.options,
+      correctAnswer: q.answer,
+      explanation: q.explanation,
+      chosenAnswer: answers[q._id],
+      correct: answers[q._id] === q.answer,
+    }));
+
+    setJustSubmittedResult({
+      score,
+      total,
+      timeTaken,
+      answers: snapshotAnswers,
     });
+    setSubmitted(true);
+    setSubmitting(false);
+    return;
+  }
 
-    const allowedTime = quiz.duration;
-    const timeTaken = allowedTime - timeLeft;
-
-    if (isDemo) {
-      const snapshotAnswers = quiz.questions.map((q) => ({
-        questionId: q._id,
-        question: q.question,
-        options: q.options,
-        correctAnswer: q.answer,
-        explanation: q.explanation,
-        chosenAnswer: answers[q._id],
-        correct: answers[q._id] === q.answer,
-      }));
-
-      setJustSubmittedResult({
-        score,
-        total,
-        timeTaken,
-        answers: snapshotAnswers,
-      });
-      setSubmitted(true);
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.id) {
+      alert("Please log in to submit quiz results");
+      setSubmitting(false);
       return;
     }
+    const payload = {
+      quiz: quiz._id,
+      user: user.id,
+      studentName: user.username,
+      answers,
+      score,
+      totalQuestions: total,
+      correctAnswers: score,
+      wrongAnswers: total - score,
+      timeTaken,
+      questionOrder,
+    };
 
-    try {
-      const res = await api.post("/api/results", { // ✅ fixed path
-        quizId: quiz._id,
-        studentName:
-          JSON.parse(localStorage.getItem("user"))?.username || "Anonymous",
-        answers,
-        score,
-        total,
-        timeTaken,
-        questionOrder,
-      });
+    console.log("📤 Submitting result payload:", payload);
 
-      setJustSubmittedResult(res.data.result);
-      setSubmitted(true);
-      localStorage.removeItem(`quiz_${id}`);
-    } catch (err) {
-      console.error("❌ Error submitting results:", err);
-      alert("Failed to submit quiz");
-    }
-  };
+    const res = await api.post("/api/results", payload);
+
+    console.log("✅ Submission success:", res.data);
+    setJustSubmittedResult(res.data.result);
+    setSubmitted(true);
+    localStorage.removeItem(`quiz_${id}`);
+  } catch (err) {
+    console.error("❌ Error submitting results:", err.response?.data || err);
+    alert("Failed to submit quiz");
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   // ---------------- GENERATE CERTIFICATE ----------------
   const generateCertificate = async () => {
@@ -372,8 +411,9 @@ export default function StudentQuiz() {
               <button
                 onClick={handleSubmit}
                 className="btn-submit-quiz"
+                disabled={submitting}
               >
-                Submit Quiz
+                {submitting ? "Submitting..." : "Submit Quiz"}
               </button>
             </div>
           )}
@@ -391,7 +431,7 @@ export default function StudentQuiz() {
               <div className="result-summary">
                 <div className="result-item">
                   <p>Score</p>
-                  <p>{justSubmittedResult.score} / {justSubmittedResult.total}</p>
+                  <p>{justSubmittedResult.score} / {justSubmittedResult.totalQuestions || justSubmittedResult.total || justSubmittedResult.answers?.length || 1}</p>
                 </div>
                 <div className="result-item">
                   <p>Time Taken</p>
@@ -399,7 +439,10 @@ export default function StudentQuiz() {
                 </div>
                 <div className="result-item">
                   <p>Percentage</p>
-                  <p>{Math.round((justSubmittedResult.score / justSubmittedResult.total) * 100)}%</p>
+                  <p>{(() => {
+                    const total = justSubmittedResult.totalQuestions || justSubmittedResult.total || justSubmittedResult.answers?.length || 1;
+                    return total > 0 ? Math.round((justSubmittedResult.score / total) * 100) : 0;
+                  })()}%</p>
                 </div>
               </div>
 

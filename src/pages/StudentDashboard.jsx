@@ -56,36 +56,37 @@ export default function StudentDashboard() {
     setLoading(true);
     setError("");
     try {
-      await Promise.all([fetchQuizzes(), fetchMyResults()]);
+      // Fetch results first to use in filtering quizzes
+      const resResults = await api.get(`/api/results/student/${student.username}`);
+      const results = resResults.data.results || [];
+      setMyResults(results);
+
+      // Now fetch quizzes and filter based on results and schedule
+      const resQuizzes = await api.get("/api/quizzes");
+      if (resQuizzes.data?.quizzes?.length > 0) {
+        const now = new Date();
+        const filtered = resQuizzes.data.quizzes.filter((q) => {
+          // Always show attempted quizzes
+          const attempted = results.some((r) => String(r.quiz?._id).trim() === String(q._id));
+          if (attempted) return true;
+
+          // If no schedule, show always
+          if (!q.scheduledStart || !q.scheduledEnd) return true;
+
+          // Show only if within scheduled time
+          const start = new Date(q.scheduledStart);
+          const end = new Date(q.scheduledEnd);
+          return now >= start && now <= end;
+        });
+        setQuizzes(filtered);
+      } else {
+        setQuizzes([]);
+      }
     } catch (err) {
       console.error("❌ Error fetching data:", err);
       setError("Failed to load data. Please try again later.");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchQuizzes = async () => {
-    try {
-      const res = await api.get("/api/quizzes");
-      if (res.data?.quizzes?.length > 0) {
-        setQuizzes(res.data.quizzes);
-      } else {
-        setQuizzes([]);
-      }
-    } catch (err) {
-      console.error("❌ Error fetching quizzes:", err.response || err);
-      setError("Unable to fetch quizzes. Check backend connection.");
-    }
-  };
-
-  const fetchMyResults = async () => {
-    try {
-      if (!student?.username) return;
-      const res = await api.get(`/api/results/student/${student.username}`);
-      setMyResults(res.data.results || []);
-    } catch (err) {
-      console.error("❌ Error fetching student results:", err.response || err);
     }
   };
 
@@ -112,7 +113,7 @@ export default function StudentDashboard() {
 
       if (res.data?.quiz) {
         const alreadyAttempted = myResults.some(
-          (r) => String(r.quizId?._id).trim() === quizId
+          (r) => String(r.quiz?._id).trim() === quizId
         );
         if (alreadyAttempted) {
           alert("❌ You have already attempted this quiz");
@@ -346,7 +347,7 @@ export default function StudentDashboard() {
               </thead>
               <tbody>
                 {quizzes.map((q) => {
-                  const attempted = myResults.find((r) => r.quizId?._id === q._id);
+                  const attempted = myResults.find((r) => r.quiz?._id === q._id);
                   return (
                     <tr key={q._id} className="border-b hover:bg-gray-100">
                       <td className="py-2 px-4">{q.title}</td>
@@ -356,28 +357,39 @@ export default function StudentDashboard() {
                         {String(q.duration % 60).padStart(2, "0")}
                       </td>
                       <td className="space-x-2">
-                        {attempted ? (
-                          <>
-                            <span className="text-gray-500">✔️ Attempted</span>
-                            {q.certificateEnabled &&
-                              attempted.score >= q.certificatePassingScore && (
-                                <button
-                                  onClick={() => generateCertificate(q, attempted)}
-                                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                                >
-                                  📜 Certificate
-                                </button>
-                              )}
-                          </>
-                        ) : (
-                          <button
-                            onClick={() => navigate(`/quiz/${String(q._id).trim()}/instructions`)}
-                            className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-                          >
-                            ▶️ Start
-                          </button>
-                        )}
-                      </td>
+  {attempted ? (
+    <>
+      <span className="text-gray-500">✔️ Attempted</span>
+      {q.certificateEnabled &&
+        attempted.score >= q.certificatePassingScore && (
+          <button
+            onClick={() => generateCertificate(q, attempted)}
+            className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+          >
+            📜 Certificate
+          </button>
+        )}
+    </>
+  ) : (() => {
+      const now = new Date();
+      const start = q.scheduledStart ? new Date(q.scheduledStart) : null;
+      const end = q.scheduledEnd ? new Date(q.scheduledEnd) : null;
+      const isActive = !start || !end || (now >= start && now <= end);
+
+      return isActive ? (
+        <button
+          onClick={() => navigate(`/quiz/${String(q._id).trim()}/instructions`)}
+          className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+        >
+          ▶️ Start
+        </button>
+      ) : (
+        <p className="text-red-500 text-sm">
+          ⏰ Available from {start?.toLocaleString()} to {end?.toLocaleString()}
+        </p>
+      );
+    })()}
+</td>
                     </tr>
                   );
                 })}
@@ -395,6 +407,7 @@ export default function StudentDashboard() {
                 <th>Quiz</th>
                 <th>Score</th>
                 <th>Total</th>
+                <th>Percentage</th>
                 <th>Time Taken</th>
                 <th>Date</th>
               </tr>
@@ -402,22 +415,27 @@ export default function StudentDashboard() {
             <tbody>
               {myResults.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="text-center py-4 text-gray-500">
+                  <td colSpan="6" className="text-center py-4 text-gray-500">
                     No results yet
                   </td>
                 </tr>
               ) : (
-                myResults.map((r) => (
+                myResults.map((r) => {
+                  const total = r.totalQuestions || r.total || 1;
+                  const percentage = total > 0 ? ((r.score / total) * 100).toFixed(2) : 0;
+                  return (
                     <tr key={r._id} className="border-b hover:bg-gray-100">
-                      <td>{r.quizId?.title || "N/A"}</td>
+                      <td>{r.quiz?.title || "N/A"}</td>
                       <td>{r.score}</td>
-                      <td>{r.total}</td>
+                      <td>{total}</td>
+                      <td>{percentage}%</td>
                       <td>
                         {Math.floor(r.timeTaken / 60)}m {r.timeTaken % 60}s
                       </td>
-                      <td>{new Date(r.date).toLocaleString()}</td>
+                      <td>{new Date(r.attemptedAt || r.date).toLocaleString()}</td>
                     </tr>
-                ))
+                  );
+                })
               )}
             </tbody>
           </table>

@@ -69,13 +69,20 @@ export default function MyResultDetail() {
       {/* Summary */}
       <div className="bg-white p-6 rounded-lg shadow mb-6">
         <p>
-          <b>Score:</b> {result.score} / {result.total}
+          <b>Score:</b> {result.score} / {result.totalQuestions || result.total}
+        </p>
+        <p>
+          <b>Percentage:</b> {(() => {
+            const total = result.totalQuestions || result.total || 1;
+            const percentage = total > 0 ? ((result.score / total) * 100).toFixed(2) : 0;
+            return `${percentage}%`;
+          })()}
         </p>
         <p>
           <b>Time Taken:</b> {result.timeTaken} sec
         </p>
         <p>
-          <b>Date:</b> {new Date(result.date).toLocaleString()}
+          <b>Date:</b> {new Date(result.attemptedAt || result.date).toLocaleString()}
         </p>
       </div>
 

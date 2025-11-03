@@ -297,7 +297,7 @@ export default function Home() {
           <motion.button
             className="btn-outline"
             onClick={() => navigate("/login/student")}
-            whileHover={{ scale: 1.05, backgroundColor: "#ff6b6b", color: "white" }}
+            whileHover={{ scale: 1.05, backgroundColor: "#ff6b6b", color: "#ffffff" }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
@@ -306,7 +306,7 @@ export default function Home() {
           <motion.button
             className="btn-outline"
             onClick={() => navigate("/login/faculty")}
-            whileHover={{ scale: 1.05, backgroundColor: "#4ecdc4", color: "white" }}
+            whileHover={{ scale: 1.05, backgroundColor: "#4ecdc4", color: "#ffffff" }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
@@ -315,7 +315,7 @@ export default function Home() {
           <motion.button
             className="btn-outline"
             onClick={() => navigate("/login/admin")}
-            whileHover={{ scale: 1.05, backgroundColor: "#96ceb4", color: "white" }}
+            whileHover={{ scale: 1.05, backgroundColor: "#96ceb4", color: "#ffffff" }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
           >

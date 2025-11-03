@@ -30,6 +30,8 @@ export default function FacultyDashboard() {
   const [quizDuration, setQuizDuration] = useState(0);
   const [quizCertificate, setQuizCertificate] = useState(false);
   const [quizPassingScore, setQuizPassingScore] = useState(0);
+  const [scheduledStart, setScheduledStart] = useState("");
+  const [scheduledEnd, setScheduledEnd] = useState("");
   const [quizId, setQuizId] = useState(null);
   // 📋 Toggle All Questions section visibility
   const [showAllQuestions, setShowAllQuestions] = useState(false);
@@ -126,12 +128,14 @@ const handleCreateQuiz = async (payload) => {
     const faculty = JSON.parse(localStorage.getItem("user"));
 
     // ✅ Send request to backend
-    const res = await api.post("/api/quizzes", {
-      ...payload,
-      createdBy: faculty?.username || "faculty",
-      certificateEnabled: quizCertificate,
-      certificatePassingScore: quizPassingScore,
-    });
+   const res = await api.post("/api/quizzes", {
+  ...payload,
+  createdBy: faculty?.username || "faculty",
+  certificateEnabled: quizCertificate,
+  certificatePassingScore: quizPassingScore,
+  scheduledStart: payload.scheduledStart ? new Date(payload.scheduledStart).toISOString() : null,
+  scheduledEnd: payload.scheduledEnd ? new Date(payload.scheduledEnd).toISOString() : null,
+});
 
     // ✅ Handle response structure safely
     const newQuizId =
@@ -153,6 +157,8 @@ const handleCreateQuiz = async (payload) => {
     setQuizDuration(10);
     setQuizCertificate(false);
     setQuizPassingScore(0);
+    setScheduledStart("");
+    setScheduledEnd("");
 
     fetchQuizzes();
   } catch (err) {
@@ -173,7 +179,7 @@ const handleCreateQuiz = async (payload) => {
         Score: r.score,
         Total: r.total,
         Date: new Date(r.date).toLocaleString(),
-        Quiz: r.quizId?.title || "N/A",
+        Quiz: r.quiz?.title || "N/A",
       }))
     );
     const wb = XLSX.utils.book_new();
@@ -195,7 +201,7 @@ const handleCreateQuiz = async (payload) => {
         r.score,
         r.total,
         new Date(r.date).toLocaleString(),
-        r.quizId?.title || "N/A",
+        r.quiz?.title || "N/A",
       ]),
       startY: 25,
     });
@@ -413,6 +419,8 @@ const handleCreateQuiz = async (payload) => {
         categories: normalizedCategories,
         count: Number(quizCount),
         duration: Number(quizDuration),
+        scheduledStart: scheduledStart ? new Date(scheduledStart) : null,
+        scheduledEnd: scheduledEnd ? new Date(scheduledEnd) : null,
         certificateEnabled: quizCertificate,         // ✅ NEW
         certificatePassingScore: quizPassingScore,   // ✅ NEW
       });
@@ -535,7 +543,30 @@ const handleCreateQuiz = async (payload) => {
     className="dashboard-input"
     min="0"
     max="59"
-/>
+  />
+</div>
+
+{/* Scheduled Start and End Times */}
+<p className="font-medium mb-2">Schedule Quiz (Optional):</p>
+<div className="grid grid-cols-2 gap-2 mb-3">
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+    <input
+      type="datetime-local"
+      value={scheduledStart}
+      onChange={(e) => setScheduledStart(e.target.value)}
+      className="dashboard-input"
+    />
+  </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+    <input
+      type="datetime-local"
+      value={scheduledEnd}
+      onChange={(e) => setScheduledEnd(e.target.value)}
+      className="dashboard-input"
+    />
+  </div>
 </div>
 <br></br>
 

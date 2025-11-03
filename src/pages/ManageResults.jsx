@@ -46,7 +46,7 @@ export default function ManageResults() {
           {results.map((r) => (
             <tr key={r._id}>
               <td>{r.studentId?.username}</td>
-              <td>{r.quizId?.title}</td>
+              <td>{r.quiz?.title}</td>
               <td>{r.score}</td>
               <td>
                 <button onClick={() => handleDelete(r._id)} style={{ color: "red" }}>
