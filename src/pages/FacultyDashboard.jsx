@@ -273,26 +273,35 @@ const handleCreateQuiz = async (payload) => {
   };
 
   const downloadCSVFile = async (fileId) => {
-    try {
-      const res = await api.get(`/api/questions/download-csv/${fileId}`, {
-        responseType: 'blob'
-      });
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      // Find the file name from uploadedCSVs
-      const file = uploadedCSVs.find(f => f._id === fileId);
-      const filename = file ? file.originalname : `uploaded_csv_${fileId}.csv`;
-      link.setAttribute('download', filename);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download error:", err);
-      alert("❌ Error downloading CSV file: " + (err.response?.data?.error || err.message));
-    }
-  };
+  try {
+    const res = await api.get(`/api/questions/download-upload/${fileId}`, {
+      responseType: "blob",
+    });
+
+    // Create a downloadable link for the blob
+    const url = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement("a");
+    link.href = url;
+
+    // Use the original filename if available
+    const file = uploadedCSVs.find((f) => f._id === fileId);
+    const filename = file ? file.originalname : `uploaded_csv_${fileId}.csv`;
+
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error("❌ Download error:", err);
+    alert(
+      "❌ Error downloading CSV file: " +
+        (err.response?.data?.error || err.message)
+    );
+  }
+};
 
   /* ---------------- FILE UPLOAD ---------------- */
   const uploadFile = async (type, file) => {
