@@ -60,28 +60,18 @@ export default function StudentDashboard() {
       const resResults = await api.get(`/api/results/student/${student.username}`);
       const results = resResults.data.results || [];
       setMyResults(results);
-
-      // Now fetch quizzes and filter based on results and schedule
+ // Fetch all quizzes (no scheduling filter now)
       const resQuizzes = await api.get("/api/quizzes");
       if (resQuizzes.data?.quizzes?.length > 0) {
-        const now = new Date();
-        const filtered = resQuizzes.data.quizzes.filter((q) => {
-          // Always show attempted quizzes
-          const attempted = results.some((r) => String(r.quiz?._id).trim() === String(q._id));
-          if (attempted) return true;
-
-          // If no schedule, show always
-          if (!q.scheduledStart || !q.scheduledEnd) return true;
-
-          // Show only if within scheduled time
-          const start = new Date(q.scheduledStart);
-          const end = new Date(q.scheduledEnd);
-          return now >= start && now <= end;
-        });
-        setQuizzes(filtered);
+        setQuizzes(resQuizzes.data.quizzes);
+      } else if (Array.isArray(resQuizzes.data)) {
+        setQuizzes(resQuizzes.data);
       } else {
         setQuizzes([]);
       }
+ // Always show attempted quizzes
+          const attempted = results.some((r) => String(r.quiz?._id).trim() === String(q._id));
+          if (attempted) return true;
     } catch (err) {
       console.error("❌ Error fetching data:", err);
       setError("Failed to load data. Please try again later.");
@@ -89,7 +79,6 @@ export default function StudentDashboard() {
       setLoading(false);
     }
   };
-
   /* ---------------- LOGOUT ---------------- */
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -370,25 +359,14 @@ export default function StudentDashboard() {
           </button>
         )}
     </>
-  ) : (() => {
-      const now = new Date();
-      const start = q.scheduledStart ? new Date(q.scheduledStart) : null;
-      const end = q.scheduledEnd ? new Date(q.scheduledEnd) : null;
-      const isActive = !start || !end || (now >= start && now <= end);
-
-      return isActive ? (
+  ) : (
         <button
           onClick={() => navigate(`/quiz/${String(q._id).trim()}/instructions`)}
           className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
         >
           ▶️ Start
         </button>
-      ) : (
-        <p className="text-red-500 text-sm">
-          ⏰ Available from {start?.toLocaleString()} to {end?.toLocaleString()}
-        </p>
-      );
-    })()}
+    )}
 </td>
                     </tr>
                   );

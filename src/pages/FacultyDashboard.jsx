@@ -30,8 +30,7 @@ export default function FacultyDashboard() {
   const [quizDuration, setQuizDuration] = useState(0);
   const [quizCertificate, setQuizCertificate] = useState(false);
   const [quizPassingScore, setQuizPassingScore] = useState(0);
-  const [scheduledStart, setScheduledStart] = useState("");
-  const [scheduledEnd, setScheduledEnd] = useState("");
+
   const [quizId, setQuizId] = useState(null);
   // 📋 Toggle All Questions section visibility
   const [showAllQuestions, setShowAllQuestions] = useState(false);
@@ -86,6 +85,8 @@ useEffect(() => {
     }
   };
 
+
+
   const fetchQuizzes = async () => {
     try {
       const res = await api.get("/api/quizzes");
@@ -133,8 +134,6 @@ const handleCreateQuiz = async (payload) => {
   createdBy: faculty?.username || "faculty",
   certificateEnabled: quizCertificate,
   certificatePassingScore: quizPassingScore,
-  scheduledStart: payload.scheduledStart ? new Date(payload.scheduledStart).toISOString() : null,
-  scheduledEnd: payload.scheduledEnd ? new Date(payload.scheduledEnd).toISOString() : null,
 });
 
     // ✅ Handle response structure safely
@@ -157,8 +156,6 @@ const handleCreateQuiz = async (payload) => {
     setQuizDuration(10);
     setQuizCertificate(false);
     setQuizPassingScore(0);
-    setScheduledStart("");
-    setScheduledEnd("");
 
     fetchQuizzes();
   } catch (err) {
@@ -419,10 +416,8 @@ const handleCreateQuiz = async (payload) => {
         categories: normalizedCategories,
         count: Number(quizCount),
         duration: Number(quizDuration),
-        scheduledStart: scheduledStart ? new Date(scheduledStart) : null,
-        scheduledEnd: scheduledEnd ? new Date(scheduledEnd) : null,
-        certificateEnabled: quizCertificate,         // ✅ NEW
-        certificatePassingScore: quizPassingScore,   // ✅ NEW
+        certificateEnabled: quizCertificate,
+        certificatePassingScore: quizPassingScore,
       });
     }}
   >
@@ -546,29 +541,7 @@ const handleCreateQuiz = async (payload) => {
   />
 </div>
 
-{/* Scheduled Start and End Times */}
-<p className="font-medium mb-2">Schedule Quiz (Optional):</p>
-<div className="grid grid-cols-2 gap-2 mb-3">
-  <div>
-    <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
-    <input
-      type="datetime-local"
-      value={scheduledStart}
-      onChange={(e) => setScheduledStart(e.target.value)}
-      className="dashboard-input"
-    />
-  </div>
-  <div>
-    <label className="block text-sm font-medium text-gray-700 mb-1">End Time</label>
-    <input
-      type="datetime-local"
-      value={scheduledEnd}
-      onChange={(e) => setScheduledEnd(e.target.value)}
-      className="dashboard-input"
-    />
-  </div>
-</div>
-<br></br>
+
 
 {/* ✅ Certificate Options */}
 <div className="mb-3 p-3 border rounded bg-gray-50">
@@ -785,16 +758,21 @@ const handleCreateQuiz = async (payload) => {
   </div>
 </div>
     
-{/* 📊 Student Results Button */}
-      <div className="glass-section text-center">
-        <h2 className="text-xl font-semibold mb-4 text-indigo-700">📊 Student Results</h2>
-        <button
-          onClick={() => navigate("/faculty/results")}
-          className="btn-primary"
-        >
-          📊 View Student Results
-        </button>
-      </div>
+{/* 📊 Student Results */}
+<div className="glass-section text-center">
+  <h2 className="text-xl font-semibold mb-4 text-indigo-700">📊 Student Results</h2>
+
+  <button
+    onClick={() => navigate("/faculty-results")}
+    className="btn-primary px-6 py-3 text-lg rounded-lg"
+  >
+    📈 View Student Results
+  </button>
+
+  <p className="mt-2 text-gray-600 text-sm">
+    Click to view all quiz performance, ranks, and export options.
+  </p>
+</div>
     </div>
   </div>
 );

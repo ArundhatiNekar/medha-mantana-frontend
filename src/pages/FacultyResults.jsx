@@ -1,4 +1,3 @@
-// frontend/src/pages/FacultyResults.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
@@ -20,9 +19,19 @@ export default function FacultyResults() {
     const fetchQuizzes = async () => {
       try {
         const res = await api.get("/api/quizzes");
-        setAllQuizzes(res.data.quizzes || []);
+        console.log("✅ Quizzes API response:", res.data);
+
+        // Normalize response (handle both shapes)
+        const data = Array.isArray(res.data)
+          ? res.data
+          : Array.isArray(res.data.quizzes)
+          ? res.data.quizzes
+          : [];
+
+        setAllQuizzes(data);
       } catch (err) {
         console.error("❌ Error fetching quizzes:", err);
+        setAllQuizzes([]);
       }
     };
 
@@ -36,10 +45,13 @@ export default function FacultyResults() {
         setResults([]);
         return;
       }
+
       const res = await api.get(`/api/results/quiz/${quizId}`);
-      setResults(res.data.results || []);
+      console.log("✅ Results for quiz:", res.data);
+      setResults(res.data.results || res.data || []);
     } catch (err) {
       console.error("❌ Error fetching results:", err);
+      setResults([]);
     }
   };
 
@@ -57,8 +69,7 @@ export default function FacultyResults() {
 
   /* ---------------- EXPORT TO EXCEL ---------------- */
   const exportToExcel = () => {
-    if (!filteredResults.length)
-      return alert("⚠️ No results to export!");
+    if (!filteredResults.length) return alert("⚠️ No results to export!");
 
     const sorted = [...filteredResults].sort((a, b) => b.score - a.score);
     const ws = XLSX.utils.json_to_sheet(
@@ -66,9 +77,9 @@ export default function FacultyResults() {
         Rank: i + 1,
         Student: r.studentName,
         Score: r.score,
-        Total: r.total,
+        Total: r.totalQuestions || r.total,
         Quiz: r.quiz?.title || "N/A",
-        Date: new Date(r.date).toLocaleString(),
+        Date: new Date(r.attemptedAt || r.date).toLocaleString(),
       }))
     );
 
@@ -80,8 +91,6 @@ export default function FacultyResults() {
   /* ---------------- COMPONENT UI ---------------- */
   return (
     <div className="faculty-dashboard-wrapper">
-      
-      
       {/* 🧭 Navbar */}
       <nav className="dashboard-navbar">
         <div className="logo">
@@ -102,10 +111,14 @@ export default function FacultyResults() {
               <div className="profile-dropdown">
                 <div className="profile-info">
                   <h3>
-                    {JSON.parse(localStorage.getItem("user"))?.username || "Faculty"}
+                    {JSON.parse(localStorage.getItem("user"))?.username ||
+                      "Faculty"}
                   </h3>
                   <p>Role: Faculty</p>
-                  <p>Email: {JSON.parse(localStorage.getItem("user"))?.email || "N/A"}</p>
+                  <p>
+                    Email:{" "}
+                    {JSON.parse(localStorage.getItem("user"))?.email || "N/A"}
+                  </p>
                 </div>
               </div>
             )}
@@ -133,11 +146,15 @@ export default function FacultyResults() {
               }}
             >
               <option value="">-- Select a Quiz --</option>
-              {allQuizzes.map((q) => (
-                <option key={q._id} value={q._id}>
-                  {q.title}
-                </option>
-              ))}
+              {allQuizzes.length > 0 ? (
+                allQuizzes.map((q) => (
+                  <option key={q._id} value={q._id}>
+                    {q.title}
+                  </option>
+                ))
+              ) : (
+                <option disabled>⚠️ No quizzes available</option>
+              )}
             </select>
 
             {/* 🔍 Search */}
@@ -192,7 +209,7 @@ export default function FacultyResults() {
                         </button>
                       </td>
                       <td>{r.score}</td>
-                      <td>{r.totalQuestions}</td>
+                      <td>{r.totalQuestions || r.total}</td>
                       <td>{new Date(r.attemptedAt).toLocaleString()}</td>
                     </tr>
                   ))}
@@ -203,7 +220,6 @@ export default function FacultyResults() {
           <p className="center-message">⚠️ No results found for this quiz</p>
         ) : (
           <p className="center-message">Please select a quiz to view results</p>
-
         )}
       </div>
     </div>
