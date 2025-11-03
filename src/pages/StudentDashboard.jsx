@@ -69,9 +69,6 @@ export default function StudentDashboard() {
       } else {
         setQuizzes([]);
       }
- // Always show attempted quizzes
-          const attempted = results.some((r) => String(r.quiz?._id).trim() === String(q._id));
-          if (attempted) return true;
     } catch (err) {
       console.error("❌ Error fetching data:", err);
       setError("Failed to load data. Please try again later.");
