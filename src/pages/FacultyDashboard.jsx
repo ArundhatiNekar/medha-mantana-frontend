@@ -763,7 +763,7 @@ const handleCreateQuiz = async (payload) => {
   <h2 className="text-xl font-semibold mb-4 text-indigo-700">📊 Student Results</h2>
 
   <button
-    onClick={() => navigate("/faculty-results")}
+    onClick={() => navigate("/faculty/results")}
     className="btn-primary px-6 py-3 text-lg rounded-lg"
   >
     📈 View Student Results
