@@ -272,37 +272,6 @@ const handleCreateQuiz = async (payload) => {
     }
   };
 
-  const downloadCSVFile = async (fileId) => {
-  try {
-    const res = await api.get(`/api/questions/download-csv/${fileId}`, {
-  responseType: "blob",
-});
-
-    // Create a downloadable link for the blob
-    const url = window.URL.createObjectURL(new Blob([res.data]));
-    const link = document.createElement("a");
-    link.href = url;
-
-    // Use the original filename if available
-    const file = uploadedCSVs.find((f) => f._id === fileId);
-    const filename = file ? file.originalname : `uploaded_csv_${fileId}.csv`;
-
-    link.setAttribute("download", filename);
-    document.body.appendChild(link);
-    link.click();
-
-    // Cleanup
-    link.remove();
-    window.URL.revokeObjectURL(url);
-  } catch (err) {
-    console.error("❌ Download error:", err);
-    alert(
-      "❌ Error downloading CSV file: " +
-        (err.response?.data?.error || err.message)
-    );
-  }
-};
-
   /* ---------------- FILE UPLOAD ---------------- */
   const uploadFile = async (type, file) => {
     if (!file) return alert("Choose a file first");
@@ -677,8 +646,7 @@ const handleCreateQuiz = async (payload) => {
             <li key={file._id} className="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border">
               <span className="text-gray-800">{file.originalname} ({new Date(file.uploadedAt).toLocaleString()})</span>
               <div className="flex space-x-2">
-                <button onClick={()=>downloadCSVFile(file._id)} className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Download</button>
-                <button onClick={()=>handleDeleteCSVFile(file._id)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                <button onClick={()=>handleDeleteCSVFile(file._id)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" align:center>Delete</button>
               </div>
             </li>
           ))}
