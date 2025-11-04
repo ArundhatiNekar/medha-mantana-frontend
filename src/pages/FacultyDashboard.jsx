@@ -274,7 +274,7 @@ const handleCreateQuiz = async (payload) => {
 
   const downloadCSVFile = async (fileId) => {
   try {
-    const res = await api.get(`/api/questions/download-upload/${fileId}`, {
+    const res = await api.get(`/api/questions/download-csv/${fileId}`, {
   responseType: "blob",
 });
 
