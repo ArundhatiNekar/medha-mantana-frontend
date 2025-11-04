@@ -107,14 +107,14 @@ useEffect(() => {
     }
   };
 
-  const fetchCSVFiles = async () => {
-    try {
-      const res = await api.get("/api/questions/csv-files");
-      setUploadedCSVs(res.data || []);
-    } catch (err) {
-      console.error("Error fetching CSV files:", err);
-    }
-  };
+ const fetchCSVFiles = async () => {
+  try {
+    const res = await api.get("/api/questions/uploaded-csvs"); // ✅ Correct route
+    setUploadedCSVs(res.data || []);
+  } catch (err) {
+    console.error("Error fetching CSV files:", err);
+  }
+};
   
   /* ---------------- LOGOUT ---------------- */
   const handleLogout = () => {
@@ -274,9 +274,9 @@ const handleCreateQuiz = async (payload) => {
 
   const downloadCSVFile = async (fileId) => {
   try {
-    const res = await api.get(`/api/questions/download-upload/${fileId}`, {
-      responseType: "blob",
-    });
+    const res = await api.get(`/api/questions/download-csv/${fileId}`, {
+  responseType: "blob",
+});
 
     // Create a downloadable link for the blob
     const url = window.URL.createObjectURL(new Blob([res.data]));
