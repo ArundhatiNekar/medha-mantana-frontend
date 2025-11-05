@@ -21,7 +21,7 @@ const AuthPage = () => {
 
     try {
       if (isLogin) {
-        // 🔑 LOGIN
+        //  LOGIN
         const res = await API.post("/api/auth/login", {
           email: form.email,
           password: form.password,
@@ -33,7 +33,7 @@ const AuthPage = () => {
         window.location.href =
           res.data.user.role === "faculty" ? "/faculty" : "/quiz";
       } else {
-        // 📝 REGISTER
+        //  REGISTER
         await API.post("/api/auth/register", form);
         alert("✅ Registered successfully, please login!");
         setIsLogin(true);

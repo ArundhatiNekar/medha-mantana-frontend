@@ -61,20 +61,55 @@ body.student-quiz {
   margin: 0;
 }
 
-/* ⏳ Timer Badge */
+/* ⏳ Timer Badge - Professional Floating Design */
 .timer-badge {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  color: #4540e3;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 255, 0.9));
+  color: #4f46e5;
+  padding: 0.75rem 1.25rem;
+  border-radius: 30px;
   font-weight: 700;
   font-size: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  animation: pulse 2s infinite;
+  letter-spacing: 0.5px;
+
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+
+  animation: floatBadge 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+  z-index: 999;
 }
+
+/* Hover effect for subtle interactivity */
+.timer-badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(79, 70, 229, 0.35);
+}
+
+/* 🕓 Timer Icon inside (optional if you add an <i> or SVG) */
+.timer-badge i {
+  font-size: 1.1rem;
+  color: #4338ca;
+}
+
+/* 🪶 Smooth floating animation */
+@keyframes floatBadge {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
 
 /* 📄 Content Section */
 .quiz-content {

@@ -114,7 +114,7 @@ const FacultyLogin = () => {
           className="text-2xl font-bold text-center mb-6 text-indigo-700"
           variants={itemVariants}
         >
-          🔑 Login as Faculty
+           Login as Faculty
         </motion.h2>
 
         {/* Login Form */}
@@ -156,7 +156,7 @@ const FacultyLogin = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {loading ? "⏳ Logging in..." : "🚀 Login"}
+            {loading ? " Logging in..." : " Login"}
           </motion.button>
         </motion.form>
 

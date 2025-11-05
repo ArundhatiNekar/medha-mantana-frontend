@@ -189,7 +189,7 @@ const handleCreateQuiz = async (payload) => {
       return alert("⚠️ No results to export");
     const sorted = [...results].sort((a, b) => b.score - a.score);
     const doc = new jsPDF();
-    doc.text("📊 Student Results Rank List", 14, 15);
+    doc.text(" Student Results Rank List", 14, 15);
     doc.autoTable({
       head: [["Rank", "Student", "Score", "Total", "Date", "Quiz"]],
       body: sorted.map((r, i) => [
@@ -353,7 +353,7 @@ const handleCreateQuiz = async (payload) => {
             <p>Email: {faculty?.email || "N/A"}</p>
           </div>
           <button onClick={handleLogout} className="btn-logout">
-            🚪 Logout
+             Logout
           </button>
         </div>
       )}
@@ -554,7 +554,7 @@ const handleCreateQuiz = async (payload) => {
       type="submit"
       className="btn-primary"
     >
-      🎯 Generate Quiz
+       Generate Quiz
     </button>
   </form>
 
@@ -654,7 +654,7 @@ const handleCreateQuiz = async (payload) => {
         </ul>
       </div>
 
-      {/* 🔥 Delete All */}
+      {/*  Delete All */}
       <div className="glass-section text-center">
         <h2 className="text-xl font-semibold mb-4 text-indigo-700">Data Management</h2>
         <button
@@ -664,7 +664,7 @@ const handleCreateQuiz = async (payload) => {
           ❌ Delete All Questions
         </button>
       </div>
-{/* 📋 All Questions (Collapsible Section) */}
+{/*  All Questions (Collapsible Section) */}
 <div className="glass-section text-center">
   {/* Header */}
   <div
@@ -735,7 +735,7 @@ const handleCreateQuiz = async (payload) => {
   </div>
 </div>
     
-{/* 📊 Student Results */}
+{/*  Student Results */}
 <div className="glass-section text-center">
   <h2 className="text-xl font-semibold mb-4 text-indigo-700">📊 Student Results</h2>
 
@@ -743,7 +743,7 @@ const handleCreateQuiz = async (payload) => {
     onClick={() => navigate("/faculty/results")}
     className="btn-primary px-6 py-3 text-lg rounded-lg"
   >
-    📈 View Student Results
+     View Student Results
   </button>
 
   <p className="mt-2 text-gray-600 text-sm">

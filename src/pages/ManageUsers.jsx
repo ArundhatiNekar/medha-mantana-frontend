@@ -134,13 +134,13 @@ export default function ManageUsers() {
                     onClick={() => openModal(user)}
                     className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
                   >
-                    ✏️ Edit
+                    Edit
                   </button>
                   <button
                     onClick={() => handleDelete(user._id)}
                     className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                   >
-                    🗑️ Delete
+                    Delete
                   </button>
                 </td>
               </tr>

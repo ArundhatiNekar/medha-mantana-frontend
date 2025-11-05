@@ -262,7 +262,7 @@ export default function StudentDashboard() {
           </h2>
         </div>
 
-        {/* 🔑 Join Quiz by Code */}
+        {/*  Join Quiz by Code */}
         <div className="glass-section text-center">
           <h2 className="text-xl font-semibold mb-4 text-indigo-700">🔑 Join Quiz by ID</h2>
           <div className="flex justify-center">
@@ -282,7 +282,7 @@ export default function StudentDashboard() {
           </div>
         </div>
 
-        {/* 🎯 Demo Quizzes */}
+        {/*  Demo Quizzes */}
         <div className="glass-section text-center">
           <h2 className="text-xl font-semibold mb-4 text-indigo-700">🎯 Practice with Demo Quizzes</h2>
           <div className="flex items-center justify-center space-x-4 mb-4">
@@ -309,7 +309,7 @@ export default function StudentDashboard() {
           </p>
         </div>
 
-        {/* 📋 Available Quizzes */}
+        {/*  Available Quizzes */}
         <div className="glass-section text-center">
           <h2 className="text-xl font-semibold mb-4 text-indigo-700">📋 Available Quizzes</h2>
 
@@ -373,7 +373,7 @@ export default function StudentDashboard() {
           )}
         </div>
 
-        {/* 📊 My Results */}
+        {/*  My Results */}
         <div className="glass-section text-center">
           <h2 className="text-xl font-semibold mb-4 text-indigo-700">📊 My Results</h2>
           <table className="min-w-full bg-white shadow rounded">

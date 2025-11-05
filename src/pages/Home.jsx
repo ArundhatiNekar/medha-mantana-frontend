@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "../styles/Home.css";
 
+
 export default function Home() {
+  
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [backgroundParticles, setBackgroundParticles] = useState([]);
@@ -501,104 +503,6 @@ export default function Home() {
           variants={itemVariants}
           style={{ position: "relative", zIndex: 1 }}
         >
-          <motion.div
-            className="floating-elements"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-          >
-            <motion.div
-              className="floating-icon icon-1"
-              animate={{
-                y: [0, -20, 0],
-                rotate: [0, 5, 0],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              🧠
-            </motion.div>
-            <motion.div
-              className="floating-icon icon-2"
-              animate={{
-                y: [0, 15, 0],
-                rotate: [0, -5, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-            >
-              📚
-            </motion.div>
-            <motion.div
-              className="floating-icon icon-3"
-              animate={{
-                y: [0, -10, 0],
-                x: [0, 10, 0],
-              }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
-            >
-              🎯
-            </motion.div>
-            <motion.div
-              className="floating-icon icon-4"
-              animate={{
-                y: [0, 20, 0],
-                rotate: [0, 10, 0],
-              }}
-              transition={{
-                duration: 4.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.5,
-              }}
-            >
-              ⚡
-            </motion.div>
-            <motion.div
-              className="floating-icon icon-5"
-              animate={{
-                y: [0, -25, 0],
-                rotate: [0, -15, 0],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 2,
-              }}
-            >
-              🌟
-            </motion.div>
-            <motion.div
-              className="floating-icon icon-6"
-              animate={{
-                y: [0, 18, 0],
-                x: [0, -12, 0],
-                rotate: [0, 20, 0],
-              }}
-              transition={{
-                duration: 4.2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.8,
-              }}
-            >
-              💡
-            </motion.div>
-          </motion.div>
 
           <motion.h1
             variants={itemVariants}
@@ -669,57 +573,6 @@ export default function Home() {
             className="hero-buttons"
             variants={itemVariants}
           >
-            <motion.button
-              className="btn-primary animated-btn"
-              onClick={() => navigate("/register")}
-              whileHover={{
-                scale: 1.1,
-                boxShadow: "0 0 25px rgba(255,107,107,0.6)",
-                rotate: [0, -1, 1, 0],
-              }}
-              whileTap={{ scale: 0.95 }}
-              animate={{
-                boxShadow: [
-                  "0 0 0 rgba(255,107,107,0.4)",
-                  "0 0 20px rgba(255,107,107,0.6)",
-                  "0 0 0 rgba(255,107,107,0.4)",
-                ],
-                y: [0, -2, 0],
-              }}
-              transition={{
-                boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-                y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-              }}
-            >
-              🚀 Get Started
-            </motion.button>
-            <motion.button
-              className="btn-outline animated-btn"
-              onClick={() => navigate("/login")}
-              whileHover={{
-                scale: 1.1,
-                boxShadow: "0 0 25px rgba(78,205,196,0.6)",
-                rotate: [0, 1, -1, 0],
-              }}
-              whileTap={{ scale: 0.95 }}
-              animate={{
-                boxShadow: [
-                  "0 0 0 rgba(78,205,196,0.4)",
-                  "0 0 20px rgba(78,205,196,0.6)",
-                  "0 0 0 rgba(78,205,196,0.4)",
-                ],
-                y: [0, 2, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-                y: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 },
-              }}
-            >
-              🔑 Login
-            </motion.button>
           </motion.div>
         </motion.div>
       </motion.section>

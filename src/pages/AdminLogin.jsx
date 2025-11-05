@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api"; // ✅ Adjust path if needed
+import "../styles/AdminLogin.css";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export default function AdminLogin() {
 
   return (
     <div className="login-page" style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>👑 Admin Login</h2>
+      <h2>Admin Login</h2>
       <form onSubmit={handleSubmit} className="login-form" style={{ display: "inline-block" }}>
         <input
           type="email"

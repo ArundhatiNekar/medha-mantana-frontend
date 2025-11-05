@@ -1,20 +1,26 @@
-/* ===========================
-   FACULTY DASHBOARD STYLES
-   Matches Home/Login/Register Theme
-   =========================== */
+/* ==========================================================
+   🌟 FACULTY DASHBOARD STYLES
+   Consistent with Home / Login / Register Theme
+   ========================================================== */
+
+/* ==========================================================
+   1️⃣ BASE STYLES
+   ========================================================== */
 
 body.faculty-dashboard {
   background: linear-gradient(90deg, #4f46e5, #06b6d4);
   background-attachment: fixed;
   background-size: cover;
-  background-repeat: no-repeat;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
   color: #1e293b;
   overflow-x: hidden;
 }
 
-/* 🌈 Dashboard Navbar */
+/* ==========================================================
+   2️⃣ NAVBAR STYLES
+   ========================================================== */
+
 .dashboard-navbar {
   display: flex;
   justify-content: space-between;
@@ -26,21 +32,22 @@ body.faculty-dashboard {
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
   margin-bottom: 2rem;
   transition: all 0.3s ease-in-out;
-  position: relative; /* for dropdown positioning */
+  position: relative;
 }
 
 .dashboard-navbar:hover {
   transform: translateY(-2px);
 }
 
-/* 🌟 Gradient Title */
+/* 🌈 Navbar Title */
 .dashboard-navbar h1 {
   font-size: 1.9rem;
   font-weight: 800;
   background: linear-gradient(90deg, #4f46e5, #06b6d4);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+ -webkit-background-clip: text;   /* Safari & Chrome */
+  -moz-background-clip: text;      /* Firefox (old) */
+  background-clip: text;           /* Standard */
+  color: transparent;
   margin: 0;
 }
 
@@ -52,234 +59,55 @@ body.faculty-dashboard {
   margin-top: 0.2rem;
   letter-spacing: 0.3px;
 }
-h2{
+
+/* ==========================================================
+   3️⃣ SECTION HEADINGS
+   ========================================================== */
+
+h2 {
   color: #010708;
   font-size: x-large;
   font-weight: 800;
   text-align: center;
-  font-style: normal;
   padding: 5px;
-  text-shadow: #2f4262;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* 🚪 Logout Button */
-.logout-btn,
-.bg-red-500 {
-  border-radius: 10px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-}
-
-.logout-btn:hover,
-.bg-red-500:hover {
-  transform: scale(1.05);
-  background-color: #d84d4d !important;
-}
-
-/* 🧊 Card Containers */
-.bg-white {
-  background: rgba(237, 237, 241, 0.75) !important;
-  backdrop-filter: blur(10px);
-  border-radius: 16px !important;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08) !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.bg-white:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-}
-
-/* 🧾 Section Headings */
 h2.text-xl {
   color: #4f46e5;
   font-weight: 700;
 }
 
-/* 📋 Table Styles */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 12px;
-  overflow: hidden;
-}
+/* ==========================================================
+   4️⃣ BUTTONS
+   ========================================================== */
 
-thead {
-  background: linear-gradient(90deg, #4f46e5, #06b6d4);
-  color: white;
-}
-
-th,
-td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-tr:hover {
-  background-color: #4b627a;
-}
-
-.questions-container {
-  transition: all 0.5s ease-in-out;
-}
-
-.questions-container table {
-  animation: fadeInUp 0.5s ease;
-}
-.questions-collapse {
-  transition: height 0.4s ease;
-  will-change: height;
-}
-
-.questions-collapse table {
-  animation: fadeInUp 0.4s ease;
-}
-
-
-/* ✅ Buttons */
 button {
   transition: all 0.25s ease;
 }
-
 button:hover {
   transform: translateY(-2px);
 }
 
-/* 🎯 Category badges */
-.bg-indigo-100 {
-  background-color: #e0e7ff !important;
-  color: #4338ca !important;
-  font-weight: 500;
-}
-
-/* ⚙️ Inputs and Selects */
-input,
-select {
-  border: 1px solid #cbd5e1 !important;
-  border-radius: 10px;
-  transition: 0.2s;
-}
-
-input:focus,
-select:focus {
-  border-color: #4f46e5 !important;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-  outline: none;
-}
-
-/* 📄 Section spacing */
-section,
-.bg-white {
-  margin-bottom: 2rem;
-}
-
-/* ✅ Scroll styling */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #4f46e5, #06b6d4);
-  border-radius: 6px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #4338ca, #0891b2);
-}
-
-/* 🪶 Smooth fade animation for cards */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.bg-white {
-  animation: fadeInUp 0.5s ease;
-}
-
-/* 🧊 Glass Section */
-.glass-section {
-  background: rgba(255, 255, 255, 0.25) !important;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 16px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.glass-section:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-/* 📱 Dashboard Input */
-.dashboard-input {
-  background: rgba(250, 248, 248, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 0.75rem;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  width: 100%;
-  margin-bottom: 0.75rem;
-}
-
-.dashboard-input:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-  background: rgba(255, 255, 255, 1);
-}
-
-/* 🎯 Category Badge */
-.category-badge {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(246, 245, 245, 0.8);
-  color: #4338ca;
-  padding: 0.5rem 0.75rem;
-  border-radius: 20px;
-  font-weight: 500;
-  font-size: 0.875rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.category-badge:hover {
-  background: rgb(207, 182, 182);
-  transform: scale(1.05);
-}
-
-/* 🔘 Button Primary */
+/* 🔘 Primary */
 .btn-primary {
   background: linear-gradient(135deg, #4f46e5, #06b6d4);
-  color: white;
+  color: #fff;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
   transition: all 0.3s ease;
   width: 100%;
-  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
 }
-
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
 }
 
-/* 🔘 Button Secondary */
+/* 🔘 Secondary */
 .btn-secondary {
   background: rgba(255, 255, 255, 0.8);
   color: #4f46e5;
@@ -287,20 +115,20 @@ section,
   padding: 0.75rem 1.5rem;
   border-radius: 10px;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
   width: 100%;
+  cursor: pointer;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
-
 .btn-secondary:hover {
   background: #4f46e5;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
 }
 
-/* 🚪 Logout Button */
+/* 🚪 Logout */
+.logout-btn,
+.bg-red-500,
 .btn-logout {
   background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
@@ -312,20 +140,124 @@ section,
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
-
-.btn-logout:hover {
+.btn-logout:hover,
+.logout-btn:hover {
   transform: scale(1.05);
   background: linear-gradient(135deg, #dc2626, #b91c1c);
 }
 
-/* 🎯 Category Selection Checkboxes */
-input[type="checkbox"] {
-  accent-color: #4f46e5;
-  transform: scale(1.2);
-  margin-right: 0.5rem;
+/* ✏️ Edit Profile */
+.btn-edit-profile {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  margin-bottom: 0.5rem;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.btn-edit-profile:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #059669, #047857);
 }
 
-/* 👤 Profile Icon */
+/* ==========================================================
+   5️⃣ CARDS & GLASS EFFECTS
+   ========================================================== */
+
+.bg-white {
+  background: rgba(237, 237, 241, 0.75) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 16px !important;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.5s ease;
+}
+.bg-white:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* 🧊 Glass Container */
+.glass-section {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+.glass-section:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================
+   6️⃣ TABLES & INPUTS
+   ========================================================== */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  overflow: hidden;
+}
+thead {
+  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  color: white;
+}
+th,
+td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+tr:hover {
+  background-color: #4b627a;
+}
+
+/* Inputs */
+input,
+select {
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+input:focus,
+select:focus {
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  outline: none;
+}
+
+/* Dashboard Input Field */
+.dashboard-input {
+  background: rgba(250, 248, 248, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
+}
+.dashboard-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  background: #fff;
+}
+
+/* ==========================================================
+   7️⃣ PROFILE DROPDOWN
+   ========================================================== */
+
 .profile-icon {
   background: rgba(255, 255, 255, 0.2);
   border: none;
@@ -339,20 +271,18 @@ input[type="checkbox"] {
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
-  margin-right: 2rem; /* move inwards from the screen edge */
+  margin-right: 2rem;
 }
-
 .profile-icon:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
 
-/* 📋 Profile Dropdown (Smart + Stylish) */
+/* Dropdown Menu */
 .profile-dropdown {
   position: absolute;
   top: 60px;
   left: 75%;
-  right: 10%;
   transform: translateX(-10%);
   background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(20px);
@@ -360,30 +290,12 @@ input[type="checkbox"] {
   padding: 1rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   border: 1px solid rgba(79, 70, 229, 0.15);
-  width: 20% cover;
   min-width: 220px;
   z-index: 1000;
   animation: fadeInDropdown 0.25s ease forwards;
-  transition: all 0.3s ease;
 }
 
-/* ✨ Fade Animation */
-@keyframes fadeInDropdown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) translateX(-10%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) translateX(-10%);
-  }
-}
-
-/* 🎯 Profile Info Section */
-.profile-info {
-  text-align: left;
-  margin-bottom: 0.8rem;
-}
+/* Profile Info */
 .profile-info h3 {
   font-weight: 700;
   color: #4f46e5;
@@ -395,36 +307,7 @@ input[type="checkbox"] {
   font-size: 0.9rem;
 }
 
-/* 🚪 Logout Button */
-.btn-logout {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  background-size: 200% 200%;
-  color: #fff;
-  width: 40%;
-  padding: 0.4rem 0;
-  border-radius: 6px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-  font-size: 0.9rem;
-  animation: gradientShift 3s ease infinite;
-}
-.btn-logout:hover {
-  background: linear-gradient(135deg, #dc2626, #b91c1c);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.4);
-  animation-play-state: paused;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* 🧭 Tiny Arrow Pointer */
+/* Dropdown Arrow */
 .arrow-up {
   position: absolute;
   top: -8px;
@@ -437,201 +320,33 @@ input[type="checkbox"] {
   filter: drop-shadow(0px -2px 3px rgba(0, 0, 0, 0.1));
 }
 
-/* 📱 Mobile: center dropdown */
-@media (max-width: 768px) {
-  .profile-dropdown {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    top: 70px;
-  }
+/* ==========================================================
+   8️⃣ ANIMATIONS
+   ========================================================== */
 
-  .arrow-up {
-    right: 50%;
-    transform: translateX(50%);
-  }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.profile-info h3 {
-  margin: 0 0 0.5rem 0;
-  color: #1f2937;
-  font-size: 1.1rem;
-  font-weight: 600;
+@keyframes fadeInDropdown {
+  from { opacity: 0; transform: translateY(-10px) translateX(-10%); }
+  to { opacity: 1; transform: translateY(0) translateX(-10%); }
 }
 
-.profile-info p {
-  margin: 0.25rem 0;
-  color: #6b7280;
-  font-size: 0.9rem;
-}
+/* ==========================================================
+   9️⃣ RESPONSIVE DESIGN
+   ========================================================== */
 
-/* ✏️ Edit Profile Button */
-.btn-edit-profile {
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-  margin-bottom: 0.5rem;
-  width: 100%;
-}
-
-.btn-edit-profile:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #059669, #047857);
-}
-
-/* 📝 Edit Profile Modal */
-.edit-profile-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  backdrop-filter: blur(5px);
-}
-
-.edit-profile-content {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  max-width: 400px;
-  width: 90%;
-  animation: modalFadeIn 0.3s ease;
-}
-
-.edit-profile-content h3 {
-  margin: 0 0 1.5rem 0;
-  color: #1f2937;
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: center;
-  background: linear-gradient(90deg, #4f46e5, #06b6d4);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #374151;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.form-group input:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-  background: rgba(255, 255, 255, 1);
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.modal-buttons button {
-  flex: 1;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.modal-buttons button:first-child {
-  background: linear-gradient(135deg, #4f46e5, #06b6d4);
-  color: white;
-  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
-}
-
-.modal-buttons button:first-child:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
-}
-
-.modal-buttons button:last-child {
-  background: rgba(107, 114, 128, 0.1);
-  color: #6b7280;
-  border: 1px solid #d1d5db;
-}
-
-.modal-buttons button:last-child:hover {
-  background: #6b7280;
-  color: white;
-  transform: translateY(-2px);
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* 📱 Responsive Tweaks */
 @media (max-width: 768px) {
   .dashboard-navbar {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-
-  .dashboard-navbar h1 {
-    font-size: 1.5rem;
-  }
-
-  .btn-logout {
-    align-self: flex-end;
-  }
-
-  .profile-dropdown {
-    min-width: 180px;
-  }
-
-  .edit-profile-content {
-    padding: 1.5rem;
-    max-width: 90%;
-  }
-
-  .modal-buttons {
-    flex-direction: column;
-  }
-
-  .modal-buttons button {
-    margin-bottom: 0.5rem;
-  }
+  .dashboard-navbar h1 { font-size: 1.5rem; }
+  .btn-logout { align-self: flex-end; }
+  .profile-dropdown { left: 50%; transform: translateX(-50%); top: 70px; }
+  .arrow-up { right: 50%; transform: translateX(50%); }
+  .edit-profile-content { max-width: 90%; padding: 1.5rem; }
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
+import "../styles/AdminDashboard.css"; // ✅ Import CSS
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function AdminDashboard() {
 
   return (
     <div style={{ textAlign: "center", padding: "40px" }}>
-      <h1>👑 Admin Dashboard</h1>
+      <h1> Admin Dashboard</h1>
       <button onClick={handleLogout} style={{ marginBottom: "20px" }}>
         Logout
       </button>
@@ -58,10 +59,9 @@ export default function AdminDashboard() {
       )}
 
       <div style={{ marginTop: "40px" }}>
-        <h2>🧭 Manage</h2>
+        <h2> Manage</h2>
         <button onClick={() => navigate("/admin/users")}>Users</button>
         <button onClick={() => navigate("/admin/quizzes")}>Quizzes</button>
-        <button onClick={() => navigate("/admin/results")}>Results</button>
       </div>
     </div>
   );

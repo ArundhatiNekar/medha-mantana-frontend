@@ -45,11 +45,11 @@ export default function StudentResultDetail() {
         <h1 className="text-2xl font-bold">
           {isFacultyMode ? (
             <>
-              📊 Results for{" "}
+               Results for{" "}
               <span className="text-indigo-600">{studentName}</span>
             </>
           ) : (
-            "📊 My Quiz Result"
+            " My Quiz Result"
           )}
         </h1>
         <button

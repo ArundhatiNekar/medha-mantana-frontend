@@ -104,7 +104,7 @@ const StudentLogin = () => {
       animate="visible"
     >
       <motion.div className="auth-card glass-effect" variants={itemVariants}>
-        {/* 🟣 Brand Section */}
+        {/*  Brand Section */}
         <motion.div className="auth-brand" variants={itemVariants}>
           <motion.h1 variants={itemVariants}>Medha Mantana</motion.h1>
           <motion.p variants={itemVariants}>
@@ -116,7 +116,7 @@ const StudentLogin = () => {
           className="text-2xl font-bold text-center mb-6 text-indigo-700"
           variants={itemVariants}
         >
-          🔑 Login as Student
+           Login as Student
         </motion.h2>
 
         {/* 🧾 Login Form */}
@@ -158,7 +158,7 @@ const StudentLogin = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {loading ? "⏳ Logging in..." : "🚀 Login"}
+            {loading ? "⏳ Logging in..." : " Login"}
           </motion.button>
         </motion.form>
 
@@ -170,7 +170,7 @@ const StudentLogin = () => {
           ────── or ──────
         </motion.div>
 
-        {/* 🌐 Google Login */}
+        {/*  Google Login */}
         <motion.div
           className="flex justify-center mb-4"
           variants={itemVariants}
@@ -185,7 +185,7 @@ const StudentLogin = () => {
           />
         </motion.div>
 
-        {/* 🆕 Register Link */}
+        {/*  Register Link */}
         <motion.p
           className="text-sm text-center mt-4"
           variants={itemVariants}

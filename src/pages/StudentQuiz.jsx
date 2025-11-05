@@ -250,11 +250,11 @@ const handleSubmit = async () => {
       questionOrder,
     };
 
-    console.log("📤 Submitting result payload:", payload);
+    console.log(" Submitting result payload:", payload);
 
     const res = await api.post("/api/results", payload);
 
-    console.log("✅ Submission success:", res.data);
+    console.log(" Submission success:", res.data);
     setJustSubmittedResult(res.data.result);
     setSubmitted(true);
     localStorage.removeItem(`quiz_${id}`);
@@ -425,7 +425,7 @@ const handleSubmit = async () => {
         <div className="result-modal-overlay">
           <div className="result-modal">
             <div className="result-header">
-              <h2>📊 Your Result</h2>
+              <h2>Your Result</h2>
             </div>
             <div className="result-content">
               <div className="result-summary">
@@ -446,7 +446,7 @@ const handleSubmit = async () => {
                 </div>
               </div>
 
-              {/* 🏆 Certificate Section */}
+              {/*  Certificate Section */}
               {quiz.certificateEnabled && justSubmittedResult.score >= quiz.certificatePassingScore && (
                 <div className="certificate-section">
                   <p>
@@ -463,7 +463,7 @@ const handleSubmit = async () => {
 
               {/* Review Section */}
               <div className="review-section">
-                <h3>📝 Review</h3>
+                <h3>Review</h3>
                 {justSubmittedResult.answers.map((q, idx) => (
                   <div
                     key={idx}

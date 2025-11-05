@@ -130,7 +130,7 @@ export default function StudentRegister() {
       animate="visible"
     >
 
-      {/* 🪄 Card Container */}
+      {/*  Card Container */}
       <motion.div
         className="auth-card glass-effect"
         variants={itemVariants}
@@ -140,14 +140,14 @@ export default function StudentRegister() {
           <motion.p variants={itemVariants}>“Sharpen Your Medha, Master Every Mantana”</motion.p>
         </motion.div>
 
-        {/* 🧾 IF NOT LOGGED IN WITH GOOGLE */}
+        {/*  IF NOT LOGGED IN WITH GOOGLE */}
         {!googleUser ? (
           <>
             <motion.h2
               className="text-2xl font-bold text-center mb-4 text-indigo-700"
               variants={itemVariants}
             >
-              📝 Register as Student
+               Register as Student
             </motion.h2>
 
             {error && (
@@ -214,7 +214,7 @@ export default function StudentRegister() {
               </motion.button>
             </motion.form>
 
-            {/* 🌐 Google Sign-Up Section */}
+            {/*  Google Sign-Up Section */}
             <motion.div
               className="flex flex-col items-center mt-4"
               variants={itemVariants}
@@ -243,7 +243,7 @@ export default function StudentRegister() {
           </>
         ) : (
           <>
-            {/* 🧩 AFTER GOOGLE LOGIN */}
+            {/*  AFTER GOOGLE LOGIN */}
             <motion.h2
               className="text-xl font-bold text-center mb-4 text-indigo-700"
               variants={itemVariants}
