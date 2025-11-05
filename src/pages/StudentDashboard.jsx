@@ -264,7 +264,7 @@ export default function StudentDashboard() {
 
         {/*  Join Quiz by Code */}
         <div className="glass-section text-center">
-          <h2 className="text-xl font-semibold mb-4 text-indigo-700">🔑 Join Quiz by ID</h2>
+          <h2 className="text-xl font-semibold mb-4 text-indigo-700">Join Quiz by ID</h2>
           <div className="flex justify-center">
             <input
               type="text"
@@ -311,7 +311,7 @@ export default function StudentDashboard() {
 
         {/*  Available Quizzes */}
         <div className="glass-section text-center">
-          <h2 className="text-xl font-semibold mb-4 text-indigo-700">📋 Available Quizzes</h2>
+          <h2 className="text-xl font-semibold mb-4 text-indigo-700">Available Quizzes</h2>
 
           {loading ? (
             <p className="text-gray-600">⏳ Loading quizzes...</p>
@@ -352,7 +352,7 @@ export default function StudentDashboard() {
             onClick={() => generateCertificate(q, attempted)}
             className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
           >
-            📜 Certificate
+            Certificate
           </button>
         )}
     </>

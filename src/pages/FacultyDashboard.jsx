@@ -661,7 +661,7 @@ const handleCreateQuiz = async (payload) => {
           onClick={handleDeleteAll}
           className="btn-danger"
         >
-          ❌ Delete All Questions
+           Delete All Questions
         </button>
       </div>
 {/*  All Questions (Collapsible Section) */}
@@ -671,7 +671,7 @@ const handleCreateQuiz = async (payload) => {
     className="flex items-center justify-between cursor-pointer select-none mb-4"
     onClick={() => setShowAllQuestions((prev) => !prev)}
   >
-    <h2 className="text-xl font-semibold text-indigo-700">📋 All Questions</h2>
+    <h2 className="text-xl font-semibold text-indigo-700"> All Questions</h2>
     <span className="text-sm text-indigo-600 font-medium">
       {showAllQuestions ? "▲ Hide" : "▼ Show"}
     </span>
