@@ -14,19 +14,23 @@ export default function ManageUsers() {
     password: "",
     role: "student",
   });
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
 
-  // Fetch all users
+  // ✅ Fetch all users
   const fetchUsers = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`${API_BASE}/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data.users || []);
     } catch (err) {
-      console.error(err);
-      toast.error("Error fetching users");
+      console.error("Error fetching users:", err);
+      toast.error("Failed to fetch users.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -34,36 +38,35 @@ export default function ManageUsers() {
     fetchUsers();
   }, []);
 
-  // Handle delete
+  // ✅ Delete user
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
-
     try {
       const res = await axios.delete(`${API_BASE}/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      toast.success(res.data.message);
+      toast.success(res.data.message || "User deleted successfully.");
       fetchUsers();
     } catch (err) {
-      console.error("❌ Error deleting user:", err.response?.data || err);
-      toast.error(err.response?.data?.error || "Server error deleting user");
+      console.error("Error deleting user:", err);
+      toast.error(err.response?.data?.error || "Server error deleting user.");
     }
   };
 
-  // Handle form input change
+  // ✅ Input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Open Add/Edit Modal
+  // ✅ Open modal (add / edit)
   const openModal = (user = null) => {
     if (user) {
       setEditingUser(user);
       setFormData({
-        username: user.username,
-        email: user.email,
+        username: user.username || "",
+        email: user.email || "",
         password: "",
-        role: user.role,
+        role: user.role || "student",
       });
     } else {
       setEditingUser(null);
@@ -72,32 +75,43 @@ export default function ManageUsers() {
     setShowModal(true);
   };
 
-  // Submit Add or Update user
+  // ✅ Add or Update user
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       if (editingUser) {
         // Update user
         const res = await axios.put(
           `${API_BASE}/users/${editingUser._id}`,
-          { username: formData.username, email: formData.email, role: formData.role },
+          {
+            username: formData.username,
+            email: formData.email,
+            role: formData.role,
+          },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        toast.success(res.data.message);
+        toast.success(res.data.message || "User updated successfully.");
       } else {
         // Add new user
+        if (!formData.password) {
+          toast.error("Password is required for new users.");
+          return;
+        }
         const res = await axios.post(`${API_BASE}/users`, formData, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        toast.success(res.data.message);
+        toast.success(res.data.message || "User added successfully.");
       }
 
       setShowModal(false);
       fetchUsers();
     } catch (err) {
-      console.error("❌ Error saving user:", err.response?.data || err);
-      toast.error(err.response?.data?.error || "Server error saving user");
+      console.error("Error saving user:", err.response?.data || err);
+      toast.error(err.response?.data?.error || "Error saving user.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -113,49 +127,53 @@ export default function ManageUsers() {
         </button>
       </div>
 
-      <table className="w-full bg-white shadow rounded-lg overflow-hidden">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-3 text-left">Username</th>
-            <th className="p-3 text-left">Email</th>
-            <th className="p-3 text-left">Role</th>
-            <th className="p-3 text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.length ? (
-            users.map((user) => (
-              <tr key={user._id} className="border-b hover:bg-gray-50">
-                <td className="p-3">{user.username}</td>
-                <td className="p-3">{user.email}</td>
-                <td className="p-3 capitalize">{user.role}</td>
-                <td className="p-3 text-center space-x-2">
-                  <button
-                    onClick={() => openModal(user)}
-                    className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(user._id)}
-                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
+      {loading ? (
+        <p className="text-center text-gray-500">Loading users...</p>
+      ) : (
+        <table className="w-full bg-white shadow rounded-lg overflow-hidden">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-3 text-left">Username</th>
+              <th className="p-3 text-left">Email</th>
+              <th className="p-3 text-left">Role</th>
+              <th className="p-3 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.length > 0 ? (
+              users.map((user) => (
+                <tr key={user._id} className="border-b hover:bg-gray-50">
+                  <td className="p-3">{user.username}</td>
+                  <td className="p-3">{user.email}</td>
+                  <td className="p-3 capitalize">{user.role}</td>
+                  <td className="p-3 text-center space-x-2">
+                    <button
+                      onClick={() => openModal(user)}
+                      className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(user._id)}
+                      className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center p-4 text-gray-500">
+                  No users found.
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" className="text-center p-4 text-gray-500">
-                No users found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      )}
 
-      {/* Modal */}
+      {/* ✅ Modal for Add/Edit */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
@@ -214,6 +232,7 @@ export default function ManageUsers() {
                 </button>
                 <button
                   type="submit"
+                  disabled={loading}
                   className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                 >
                   {editingUser ? "Update" : "Add"}
